@@ -3,7 +3,7 @@ import { View, FlatList } from "react-native";
 import Searchbox from "../../../components/SearchBox";
 import RestuarantCard from "../components/RestuarantCard/RestaurantCard";
 
-import { restuarantProp } from "../../../infrastructure/types";
+import { restuarantProp } from "../../../utils/types";
 import styled from "styled-components/native";
 import { SafeArea } from "../../../components/SafeArea";
 

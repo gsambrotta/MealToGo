@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { ThemeProps } from "../../../../infrastructure/types";
+import { ThemeProps } from "../../../../utils/types";
 import { Card } from "react-native-paper";
 
 export const CardContainer = styled(Card)`

@@ -14,6 +14,7 @@ import RestaurantsScreen from "./src/features/restaurants/screens/RestaurantsScr
 import SettingsScreen from "./src/features/restaurants/screens/SettingsScreen";
 import MapScreen from "./src/features/restaurants/screens/MapScreen";
 import { IconComp } from "./src/components/Icon";
+import { restuarantsRequest } from "./src/services/restaurants/RestaurantsService";
 
 const Tab = createBottomTabNavigator();
 
@@ -35,6 +36,8 @@ const App: React.FC = () => {
   const areFontsLoaded = oswaldLoaded && latoLoaded;
 
   if (!areFontsLoaded) return <></>;
+
+  restuarantsRequest();
 
   return (
     <>

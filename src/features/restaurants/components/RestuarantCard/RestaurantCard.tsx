@@ -4,7 +4,7 @@ import { SvgXml } from "react-native-svg";
 import StarIcon from "../../../../../assets/star";
 import OpenIcon from "../../../../../assets/open";
 import { TextComp } from "../../../../components/Typography/Text";
-import { restuarantProp } from "../../../../infrastructure/types";
+import { restuarantProp } from "../../../../utils/types";
 import {
   CardContainer,
   CardContent,
