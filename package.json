@@ -30,6 +30,7 @@
     "@types/react": "~18.0.14",
     "@types/react-native": "~0.70.6",
     "@types/styled-components-react-native": "^5.2.1",
+    "camelize-ts": "^2.3.0",
     "react-native-paper": "^5.2.0",
     "react-native-safe-area-context": "4.4.1",
     "styled-components": "^5.3.6",

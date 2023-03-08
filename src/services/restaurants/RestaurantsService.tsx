@@ -1,5 +1,5 @@
 import { mocks } from "./mock";
-import { camalize } from "../../utils/camelcase";
+import camelize from "camelize-ts";
 
 export const restuarantsRequest = (
   location: string = "37.7749295,-122.4194155"
@@ -13,11 +13,22 @@ export const restuarantsRequest = (
   });
 };
 
+const restaurantsTransform = ({ results = [] }) => {
+  const mappedResults = results.map((restaurant: { [key: string]: any }) => {
+    return {
+      ...restaurant,
+      isOpenNow: restaurant.opening_hours?.open_now,
+      isClosedTemporarily: restaurant.business_status === "CLOSED_TEMPORARILY",
+    };
+  });
+  return camelize(mappedResults);
+};
+
 const fetchMockRest = async () => {
   try {
     const res = await restuarantsRequest();
     if (res) {
-      console.log(camalize(res));
+      console.log(restaurantsTransform(res));
     }
   } catch (err) {
     console.error("fetch mocks err", err);
