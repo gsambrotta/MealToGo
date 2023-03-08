@@ -4,6 +4,7 @@ import { SvgXml } from "react-native-svg";
 import StarIcon from "../../../../../assets/star";
 import OpenIcon from "../../../../../assets/open";
 import { TextComp } from "../../../../components/Typography/Text";
+import { restuarantProp } from "../../../../infrastructure/types";
 import {
   CardContainer,
   CardContent,
@@ -28,8 +29,15 @@ const mockRestuarant = {
 };
 
 const RestuarantCard: React.FC = ({}) => {
-  const { name, icon, photo, address, isOpenNow, rating, isClosedTemporarily } =
-    mockRestuarant;
+  const {
+    name,
+    icon,
+    photo,
+    address,
+    isOpenNow,
+    rating,
+    isClosedTemporarily,
+  }: restuarantProp = mockRestuarant;
   const ratingArray = Array.from(new Array(Math.floor(rating)));
 
   return (
