@@ -1,10 +1,10 @@
 import { DefaultTheme } from "styled-components/native";
 
-export interface ThemeProps {
+export interface ThemeType {
   theme: DefaultTheme;
 }
 
-export type restuarantProp = {
+export type RestaurantType = {
   name: string;
   icon: string;
   photo: string[];
@@ -12,4 +12,12 @@ export type restuarantProp = {
   isOpenNow: boolean;
   rating: number;
   isClosedTemporarily: boolean;
+};
+
+export type RestaurantsType = {
+  restaurants: RestaurantType[];
+};
+
+export type ChildrenType = {
+  children?: React.ReactNode;
 };

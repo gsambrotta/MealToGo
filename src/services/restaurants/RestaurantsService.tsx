@@ -1,4 +1,4 @@
-import { mocks } from "./mock";
+import { mocks, mockImages } from "./mock";
 import camelize from "camelize-ts";
 
 export const restuarantsRequest = (
@@ -13,8 +13,24 @@ export const restuarantsRequest = (
   });
 };
 
-const restaurantsTransform = ({ results = [] }) => {
+export const restaurantsTransform = ({ results = [] }) => {
   const mappedResults = results.map((restaurant: { [key: string]: any }) => {
+    const randomPhoto = restaurant.photos.map(() => {
+      return mockImages[Math.ceil(Math.random() * (mockImages.length - 1))];
+    });
+
+    const photosRemovedFalse = restaurant.photos[0].html_attributions.filter(
+      (item: any) =>
+        item.length > 0 &&
+        typeof item !== (null || undefined || "boolean") &&
+        item
+    );
+
+    restaurant.photo =
+      photosRemovedFalse.length > 0
+        ? restaurant.photos[0].html_attributions[0]
+        : randomPhoto;
+
     return {
       ...restaurant,
       isOpenNow: restaurant.opening_hours?.open_now,
@@ -24,15 +40,15 @@ const restaurantsTransform = ({ results = [] }) => {
   return camelize(mappedResults);
 };
 
-const fetchMockRest = async () => {
-  try {
-    const res = await restuarantsRequest();
-    if (res) {
-      console.log(restaurantsTransform(res));
-    }
-  } catch (err) {
-    console.error("fetch mocks err", err);
-  }
-};
+// const fetchMockRest = async () => {
+//   try {
+//     const res = await restuarantsRequest();
+//     if (res) {
+//       console.log(restaurantsTransform(res));
+//     }
+//   } catch (err) {
+//     console.error("fetch mocks err", err);
+//   }
+// };
 
-fetchMockRest();
+// fetchMockRest();
