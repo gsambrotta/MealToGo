@@ -14,8 +14,9 @@ import RestaurantsScreen from "./src/features/restaurants/screens/RestaurantsScr
 import SettingsScreen from "./src/features/restaurants/screens/SettingsScreen";
 import MapScreen from "./src/features/restaurants/screens/MapScreen";
 import { IconComp } from "./src/components/Icon";
-import { restuarantsRequest } from "./src/services/restaurants/RestaurantsService";
-import { RestuarantsContextProvider } from "./src/services/restaurants/RestaurantsContext";
+import { restaurantsRequest } from "./src/services/restaurants/RestaurantsService";
+import { RestaurantsContextProvider } from "./src/services/restaurants/RestaurantsContext";
+import { LocationContextProvider } from "./src/services/location/LocationContext";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,32 +39,36 @@ const App: React.FC = () => {
 
   if (!areFontsLoaded) return <></>;
 
-  restuarantsRequest();
+  restaurantsRequest();
 
   return (
     <>
       <ThemeProvider>
-        <RestuarantsContextProvider>
-          <NavigationContainer>
-            <Tab.Navigator
-              screenOptions={({ route }) => ({
-                tabBarIcon: ({ color, size }) => {
-                  const iconName: keyof typeof Ionicons.glyphMap =
-                    TAB_ICON[route.name as keyof TabIconProps];
+        <LocationContextProvider>
+          <RestaurantsContextProvider>
+            <NavigationContainer>
+              <Tab.Navigator
+                screenOptions={({ route }) => ({
+                  tabBarIcon: ({ color, size }) => {
+                    const iconName: keyof typeof Ionicons.glyphMap =
+                      TAB_ICON[route.name as keyof TabIconProps];
 
-                  return <IconComp name={iconName} size={size} color={color} />;
-                },
-                tabBarActiveTintColor: "tomato",
-                tabBarInactiveTintColor: "gray",
-              })}
-            >
-              <Tab.Screen name="Restaurants" component={RestaurantsScreen} />
-              <Tab.Screen name="Map" component={MapScreen} />
+                    return (
+                      <IconComp name={iconName} size={size} color={color} />
+                    );
+                  },
+                  tabBarActiveTintColor: "tomato",
+                  tabBarInactiveTintColor: "gray",
+                })}
+              >
+                <Tab.Screen name="Restaurants" component={RestaurantsScreen} />
+                <Tab.Screen name="Map" component={MapScreen} />
 
-              <Tab.Screen name="Settings" component={SettingsScreen} />
-            </Tab.Navigator>
-          </NavigationContainer>
-        </RestuarantsContextProvider>
+                <Tab.Screen name="Settings" component={SettingsScreen} />
+              </Tab.Navigator>
+            </NavigationContainer>
+          </RestaurantsContextProvider>
+        </LocationContextProvider>
       </ThemeProvider>
       <StatusBar />
     </>

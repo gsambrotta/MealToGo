@@ -3,7 +3,7 @@ import { View, FlatList, ListRenderItem } from "react-native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 
 import { SafeArea } from "../../../components/SafeArea";
-import { RestuarantsContext } from "../../../services/restaurants/RestaurantsContext";
+import { RestaurantsContext } from "../../../services/restaurants/RestaurantsContext";
 import Searchbox from "../../../components/SearchBox";
 import RestuarantCard from "../components/RestuarantCard/RestaurantCard";
 
@@ -33,7 +33,7 @@ const renderRestaurantData: ListRenderItem<RestaurantType> = ({ item }) => {
 };
 
 const RestaurantsScreen: React.FC = () => {
-  const { restaurants, isLoading, error } = useContext(RestuarantsContext);
+  const { restaurants, isLoading, error } = useContext(RestaurantsContext);
 
   return (
     <SafeArea>

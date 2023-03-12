@@ -1,7 +1,7 @@
 import { mocks, mockImages } from "./mock";
 import camelize from "camelize-ts";
 
-export const restuarantsRequest = (
+export const restaurantsRequest = (
   location: string = "37.7749295,-122.4194155"
 ) => {
   return new Promise((resolve, reject) => {
@@ -39,16 +39,3 @@ export const restaurantsTransform = ({ results = [] }) => {
   });
   return camelize(mappedResults);
 };
-
-// const fetchMockRest = async () => {
-//   try {
-//     const res = await restuarantsRequest();
-//     if (res) {
-//       console.log(restaurantsTransform(res));
-//     }
-//   } catch (err) {
-//     console.error("fetch mocks err", err);
-//   }
-// };
-
-// fetchMockRest();

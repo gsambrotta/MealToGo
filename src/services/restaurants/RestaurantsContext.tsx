@@ -1,5 +1,5 @@
 import React, { FC, useState, createContext, useEffect, Children } from "react";
-import { restuarantsRequest, restaurantsTransform } from "./RestaurantsService";
+import { restaurantsRequest, restaurantsTransform } from "./RestaurantsService";
 
 import {
   ChildrenType,
@@ -19,10 +19,10 @@ const initContextValue = {
   error: null,
 };
 
-export const RestuarantsContext =
+export const RestaurantsContext =
   createContext<contextValueType>(initContextValue);
 
-export const RestuarantsContextProvider: FC<ChildrenType> = (props) => {
+export const RestaurantsContextProvider: FC<ChildrenType> = (props) => {
   const [restaurants, setRestaurants] = useState<RestaurantType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | unknown>(null);
@@ -32,7 +32,7 @@ export const RestuarantsContextProvider: FC<ChildrenType> = (props) => {
 
     setTimeout(async () => {
       try {
-        const res = await restuarantsRequest();
+        const res = await restaurantsRequest();
         if (res) {
           // @ts-ignore
           setRestaurants(restaurantsTransform(res));
@@ -50,7 +50,7 @@ export const RestuarantsContextProvider: FC<ChildrenType> = (props) => {
   }, []);
 
   return (
-    <RestuarantsContext.Provider
+    <RestaurantsContext.Provider
       value={{
         restaurants,
         isLoading,
@@ -58,6 +58,6 @@ export const RestuarantsContextProvider: FC<ChildrenType> = (props) => {
       }}
     >
       {props.children}
-    </RestuarantsContext.Provider>
+    </RestaurantsContext.Provider>
   );
 };
