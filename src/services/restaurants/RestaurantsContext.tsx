@@ -1,11 +1,7 @@
-import React, { FC, useState, createContext, useEffect, Children } from "react";
+import React, { FC, useState, createContext, useEffect } from "react";
 import { restaurantsRequest, restaurantsTransform } from "./RestaurantsService";
 
-import {
-  ChildrenType,
-  RestaurantsType,
-  RestaurantType,
-} from "../../utils/types";
+import { ChildrenType, RestaurantType } from "../../utils/types";
 
 type contextValueType = {
   restaurants: RestaurantType[];

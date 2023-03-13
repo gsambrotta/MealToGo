@@ -1,10 +1,10 @@
 import React, { FC, useState, createContext, useEffect, Children } from "react";
 import { locationRequest, locationTransform } from "./LocationService";
 
-import { ChildrenType, cityLocationType } from "../../utils/types";
+import { ChildrenType, LocationType } from "../../utils/types";
 
 type contextValueType = {
-  location: cityLocationType[];
+  location: LocationType[];
   isLoading: boolean;
   error: string | unknown;
   search: (arg0: string) => void;
@@ -24,7 +24,7 @@ export const LocationContext =
 
 export const LocationContextProvider: FC<ChildrenType> = (props) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [location, setLocation] = useState<cityLocationType[]>([]);
+  const [location, setLocation] = useState<LocationType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | unknown>(null);
 
