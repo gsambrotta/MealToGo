@@ -4,31 +4,34 @@ import { locationRequest, locationTransform } from "./LocationService";
 import { ChildrenType, LocationType } from "../../utils/types";
 
 type contextValueType = {
-  location: LocationType[];
-  isLoading: boolean;
-  error: string | unknown;
+  location: LocationType;
+  isLoadingLocation: boolean;
+  errorLocation: string | boolean | unknown;
   search: (arg0: string) => void;
   searchTerm: string;
 };
 
 const initContextValue = {
-  location: [],
-  isLoading: false,
-  error: null,
+  location: {
+    lng: 0,
+    lat: 0,
+  },
+  isLoadingLocation: false,
+  errorLocation: false,
   search: () => null,
-  searchTerm: "",
+  searchTerm: "toronto",
 };
 
 export const LocationContext =
   createContext<contextValueType>(initContextValue);
 
 export const LocationContextProvider: FC<ChildrenType> = (props) => {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [location, setLocation] = useState<LocationType[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("san francisco");
+  const [location, setLocation] = useState<LocationType>({ lng: 0, lat: 0 });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | unknown>(null);
 
-  const onSearch = (searchKeyword: string = "Antwerp") => {
+  const onSearch = (searchKeyword: string) => {
     setIsLoading(true);
     setSearchTerm(searchKeyword);
 
@@ -39,24 +42,23 @@ export const LocationContextProvider: FC<ChildrenType> = (props) => {
           // @ts-ignore
           setLocation(locationTransform(res));
           setIsLoading(false);
+          setError(false);
         }
       } catch (err) {
         console.error("fetch mocks err", err);
         setError(err);
+        setIsLoading(false);
+        return;
       }
     }, 2000);
   };
-
-  useEffect(() => {
-    onSearch();
-  }, []);
 
   return (
     <LocationContext.Provider
       value={{
         location,
-        isLoading,
-        error,
+        isLoadingLocation: isLoading,
+        errorLocation: error,
         search: onSearch,
         searchTerm,
       }}

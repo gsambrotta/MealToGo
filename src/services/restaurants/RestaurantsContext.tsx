@@ -1,5 +1,12 @@
-import React, { FC, useState, createContext, useEffect } from "react";
+import React, {
+  FC,
+  useState,
+  createContext,
+  useContext,
+  useEffect,
+} from "react";
 import { restaurantsRequest, restaurantsTransform } from "./RestaurantsService";
+import { LocationContext } from "../location/LocationContext";
 
 import { ChildrenType, RestaurantType } from "../../utils/types";
 
@@ -22,28 +29,36 @@ export const RestaurantsContextProvider: FC<ChildrenType> = (props) => {
   const [restaurants, setRestaurants] = useState<RestaurantType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | unknown>(null);
+  const { location } = useContext(LocationContext);
 
-  const fetchRestuarants = () => {
+  const fetchRestuarants = (loc: string) => {
     setIsLoading(true);
+    setRestaurants([]);
 
     setTimeout(async () => {
       try {
-        const res = await restaurantsRequest();
+        const res = await restaurantsRequest(loc);
         if (res) {
           // @ts-ignore
           setRestaurants(restaurantsTransform(res));
           setIsLoading(false);
+          setError(false);
         }
       } catch (err) {
         console.error("fetch mocks err", err);
         setError(err);
+        setIsLoading(false);
+        return;
       }
     }, 2000);
   };
 
   useEffect(() => {
-    fetchRestuarants();
-  }, []);
+    if (location) {
+      const locationString = `${location.lat},${location.lng}`;
+      fetchRestuarants(locationString);
+    }
+  }, [location]);
 
   return (
     <RestaurantsContext.Provider

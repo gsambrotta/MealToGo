@@ -1,6 +1,6 @@
 import { locations } from "./locationMock";
 import camelize from "camelize-ts";
-import { geometryType, LocationType } from "../../utils/types";
+import { geometryType } from "../../utils/types";
 
 type resultType = {
   results: geometryType[];
@@ -26,6 +26,7 @@ const geoInit = {
 export const locationRequest = (searchTerm: string) => {
   return new Promise((resolve, reject) => {
     const mockLocation = locations[searchTerm as keyof typeof locations];
+    console.log({ mockLocation });
     if (!mockLocation) {
       reject("not found");
     }
@@ -35,7 +36,7 @@ export const locationRequest = (searchTerm: string) => {
 
 export const locationTransform = ({ results }: resultType) => {
   const camelizeResult = camelize(results);
-  const { geometry = geoInit }: LocationType =
+  const { geometry = geoInit }: geometryType =
     camelizeResult[0 as keyof typeof camelize];
   const { lat, lng } = geometry.location;
 

@@ -42,20 +42,6 @@ export type geometryType = {
 };
 
 export type LocationType = {
-  geometry: {
-    location: {
-      lng: number;
-      lat: number;
-    };
-    viewport: {
-      northeast: {
-        lat: number;
-        lng: number;
-      };
-      southwest: {
-        lat: number;
-        lng: number;
-      };
-    };
-  };
+  lng: number;
+  lat: number;
 };
