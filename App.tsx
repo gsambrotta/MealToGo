@@ -14,7 +14,6 @@ import RestaurantsScreen from "./src/features/restaurants/screens/RestaurantsScr
 import SettingsScreen from "./src/features/restaurants/screens/SettingsScreen";
 import MapScreen from "./src/features/restaurants/screens/MapScreen";
 import { IconComp } from "./src/components/Icon";
-import { restaurantsRequest } from "./src/services/restaurants/RestaurantsService";
 import { RestaurantsContextProvider } from "./src/services/restaurants/RestaurantsContext";
 import { LocationContextProvider } from "./src/services/location/LocationContext";
 
@@ -38,8 +37,6 @@ const App: React.FC = () => {
   const areFontsLoaded = oswaldLoaded && latoLoaded;
 
   if (!areFontsLoaded) return <></>;
-
-  restaurantsRequest();
 
   return (
     <>

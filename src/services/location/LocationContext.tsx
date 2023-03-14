@@ -13,13 +13,13 @@ type contextValueType = {
 
 const initContextValue = {
   location: {
-    lng: 0,
-    lat: 0,
+    lat: 37.7749295,
+    lng: -122.4194155,
   },
   isLoadingLocation: false,
   errorLocation: false,
   search: () => null,
-  searchTerm: "toronto",
+  searchTerm: "san francisco",
 };
 
 export const LocationContext =
@@ -27,30 +27,33 @@ export const LocationContext =
 
 export const LocationContextProvider: FC<ChildrenType> = (props) => {
   const [searchTerm, setSearchTerm] = useState<string>("san francisco");
-  const [location, setLocation] = useState<LocationType>({ lng: 0, lat: 0 });
+  const [location, setLocation] = useState<LocationType>({
+    lat: 37.7749295,
+    lng: -122.4194155,
+  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | unknown>(null);
 
-  const onSearch = (searchKeyword: string) => {
+  const onSearch = async (searchKeyword: string) => {
     setIsLoading(true);
     setSearchTerm(searchKeyword);
+    if (!searchKeyword.length) {
+      return;
+    }
 
-    setTimeout(async () => {
-      try {
-        const res = await locationRequest(searchKeyword.toLowerCase());
-        if (res) {
-          // @ts-ignore
-          setLocation(locationTransform(res));
-          setIsLoading(false);
-          setError(false);
-        }
-      } catch (err) {
-        console.error("fetch mocks err", err);
-        setError(err);
+    try {
+      const res = await locationRequest(searchKeyword.toLowerCase());
+      if (res) {
+        // @ts-ignore
+        setLocation(locationTransform(res));
+        setError(false);
         setIsLoading(false);
-        return;
       }
-    }, 2000);
+    } catch (err) {
+      console.error("fetch mocks err", err);
+      setError(err);
+      setIsLoading(false);
+    }
   };
 
   return (

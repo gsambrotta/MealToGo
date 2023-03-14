@@ -26,7 +26,6 @@ const LoadingSpinner = styled(ActivityIndicator)`
 `;
 
 const renderRestaurantData: ListRenderItem<RestaurantType> = ({ item }) => {
-  console.log(item);
   return <RestuarantCard restaurant={item} />;
 };
 

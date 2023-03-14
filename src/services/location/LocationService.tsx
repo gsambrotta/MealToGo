@@ -24,13 +24,14 @@ const geoInit = {
 };
 
 export const locationRequest = (searchTerm: string) => {
+  if (!searchTerm) return;
   return new Promise((resolve, reject) => {
     const mockLocation = locations[searchTerm as keyof typeof locations];
-    console.log({ mockLocation });
     if (!mockLocation) {
       reject("not found");
+    } else {
+      resolve(mockLocation);
     }
-    resolve(mockLocation);
   });
 };
 

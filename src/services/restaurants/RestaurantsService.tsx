@@ -2,12 +2,14 @@ import { mocks, mockImages } from "./mock";
 import camelize from "camelize-ts";
 
 export const restaurantsRequest = (location: string) => {
+  if (!location) return;
   return new Promise((resolve, reject) => {
     const mock = mocks[location as keyof typeof mocks];
     if (!mock) {
       reject("not found");
+    } else {
+      resolve(mock);
     }
-    resolve(mock);
   });
 };
 

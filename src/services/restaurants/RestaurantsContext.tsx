@@ -41,16 +41,15 @@ export const RestaurantsContextProvider: FC<ChildrenType> = (props) => {
         if (res) {
           // @ts-ignore
           setRestaurants(restaurantsTransform(res));
-          setIsLoading(false);
           setError(false);
+          setIsLoading(false);
         }
       } catch (err) {
-        console.error("fetch mocks err", err);
+        console.log("fetch mocks err", err);
         setError(err);
         setIsLoading(false);
-        return;
       }
-    }, 2000);
+    }, 1000);
   };
 
   useEffect(() => {
