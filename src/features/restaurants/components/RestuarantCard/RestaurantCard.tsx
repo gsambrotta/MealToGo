@@ -1,10 +1,10 @@
 import React from "react";
-import { Button, Card } from "react-native-paper";
+import { Card } from "react-native-paper";
 import { SvgXml } from "react-native-svg";
 import StarIcon from "../../../../../assets/star";
 import OpenIcon from "../../../../../assets/open";
 import { TextComp } from "../../../../components/Typography/Text";
-import { RestaurantsType, RestaurantType } from "../../../../utils/types";
+import { RestaurantType } from "../../../../utils/types";
 import {
   CardContainer,
   CardContent,
@@ -32,7 +32,6 @@ const RestaurantCard = ({ restaurant }: RestaurantPropType) => {
 
   return (
     <CardContainer mode="elevated" elevation={5}>
-      {/* <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} /> */}
       <Card.Cover source={{ uri: photo[0] }} />
       <CardContent>
         <TextComp variant="label">{name}</TextComp>
@@ -52,10 +51,6 @@ const RestaurantCard = ({ restaurant }: RestaurantPropType) => {
         </InfoRow>
         <TextComp variant="caption">{address}</TextComp>
       </CardContent>
-      {/* <Card.Actions>
-      <Button>Cancel</Button>
-      <Button>Ok</Button>
-    </Card.Actions> */}
     </CardContainer>
   );
 };

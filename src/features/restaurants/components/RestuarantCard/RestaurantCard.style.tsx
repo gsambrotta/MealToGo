@@ -24,11 +24,12 @@ export const Rating = styled.View<ThemeType>`
 export const InfoRowEnd = styled.View<ThemeType>`
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-end;
   width: 60%;
 `;
 
 export const CusineIcon = styled.Image<ThemeType>`
   width: 20px;
   height: 20px;
+  margin-left: 10px;
 `;

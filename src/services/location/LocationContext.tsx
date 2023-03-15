@@ -34,27 +34,34 @@ export const LocationContextProvider: FC<ChildrenType> = (props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | unknown>(null);
 
-  const onSearch = async (searchKeyword: string) => {
+  const onSearch = (searchKeyword: string) => {
     setIsLoading(true);
     setSearchTerm(searchKeyword);
-    if (!searchKeyword.length) {
-      return;
-    }
+  };
 
-    try {
-      const res = await locationRequest(searchKeyword.toLowerCase());
-      if (res) {
-        // @ts-ignore
-        setLocation(locationTransform(res));
-        setError(false);
+  useEffect(() => {
+    const fetchLocation = async () => {
+      if (!searchTerm.length) {
+        return;
+      }
+
+      try {
+        const res = await locationRequest(searchTerm.toLowerCase());
+        if (res) {
+          // @ts-ignore
+          setLocation(locationTransform(res));
+          setError(false);
+          setIsLoading(false);
+        }
+      } catch (err) {
+        console.error("fetch mocks err", err);
+        setError(err);
         setIsLoading(false);
       }
-    } catch (err) {
-      console.error("fetch mocks err", err);
-      setError(err);
-      setIsLoading(false);
-    }
-  };
+    };
+
+    fetchLocation();
+  }, [searchTerm]);
 
   return (
     <LocationContext.Provider

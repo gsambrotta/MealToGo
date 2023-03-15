@@ -4,6 +4,11 @@ export interface ThemeType {
   theme: DefaultTheme;
 }
 
+export type RestaurantavigationProp = {
+  RestaurantsScreen: undefined;
+  RestaurantDetails: undefined;
+};
+
 export type RestaurantType = {
   name: string;
   icon: string;

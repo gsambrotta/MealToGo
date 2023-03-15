@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { FlatList, ListRenderItem, View } from "react-native";
+import { FlatList, ListRenderItem, View, Pressable } from "react-native";
 import { Text, ActivityIndicator } from "react-native-paper";
+import type { StackScreenProps } from "@react-navigation/stack";
 
 import { SafeArea } from "../../../components/SafeArea";
 import { RestaurantsContext } from "../../../services/restaurants/RestaurantsContext";
@@ -8,7 +9,7 @@ import { LocationContext } from "../../../services/location/LocationContext";
 import RestuarantCard from "../components/RestuarantCard/RestaurantCard";
 import SearchComponent from "../components/RestuarantCard/SearchComponent";
 
-import { RestaurantType } from "../../../utils/types";
+import { RestaurantType, RestaurantavigationProp } from "../../../utils/types";
 import styled from "styled-components/native";
 import { theme } from "../../../infrastructure/theme";
 
@@ -25,14 +26,23 @@ const LoadingSpinner = styled(ActivityIndicator)`
   align-items: center;
 `;
 
-const renderRestaurantData: ListRenderItem<RestaurantType> = ({ item }) => {
-  return <RestuarantCard restaurant={item} />;
-};
+type RestaurantsScreenProps = StackScreenProps<
+  RestaurantavigationProp,
+  "RestaurantsScreen"
+>;
 
-const RestaurantsScreen: React.FC = () => {
+const RestaurantsScreen = ({ navigation }: RestaurantsScreenProps) => {
   const { restaurants, isLoading, error } = useContext(RestaurantsContext);
   const { location, isLoadingLocation, errorLocation } =
     useContext(LocationContext);
+
+  const renderRestaurantData: ListRenderItem<RestaurantType> = ({ item }) => {
+    return (
+      <Pressable onPress={() => navigation.navigate("RestaurantDetails")}>
+        <RestuarantCard restaurant={item} />
+      </Pressable>
+    );
+  };
 
   return (
     <SafeArea>
