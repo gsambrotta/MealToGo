@@ -8,7 +8,9 @@ import SettingsScreen from "../../features/restaurants/screens/SettingsScreen";
 import MapScreen from "../../features/map/screens/MapScreen";
 import { IconComp } from "../../components/Icon";
 
-const Tab = createBottomTabNavigator();
+import { AppNavigationProp } from "../../utils/types";
+
+const Tab = createBottomTabNavigator<AppNavigationProp>();
 
 interface TabIconProps {
   Restaurants: keyof typeof Ionicons.glyphMap;

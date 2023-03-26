@@ -4,7 +4,14 @@ export interface ThemeType {
   theme: DefaultTheme;
 }
 
-export type RestaurantavigationProp = {
+export type AppNavigationProp = {
+  RestaurantsScreen: undefined;
+  RestaurantDetailScreen: { restaurant: RestaurantType };
+  Map: undefined;
+  Settings: undefined;
+};
+
+export type RestaurantNavigationProp = {
   RestaurantsScreen: undefined;
   RestaurantDetailScreen: { restaurant: RestaurantType };
 };

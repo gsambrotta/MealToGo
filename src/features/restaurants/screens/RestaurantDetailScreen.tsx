@@ -6,10 +6,10 @@ import { List } from "react-native-paper";
 import RestaurantCard from "../components/RestuarantCard/RestaurantCard";
 import { SafeArea } from "../../../components/SafeArea";
 
-import { RestaurantavigationProp } from "../../../utils/types";
+import { RestaurantNavigationProp } from "../../../utils/types";
 
 type RestaurantDetailScreenNavigationProps = StackScreenProps<
-  RestaurantavigationProp,
+  RestaurantNavigationProp,
   "RestaurantDetailScreen"
 >;
 

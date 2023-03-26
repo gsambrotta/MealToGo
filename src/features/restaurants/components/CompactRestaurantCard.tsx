@@ -1,17 +1,17 @@
 import React from "react";
-import styled from "styled-components/native";
 import WebView from "react-native-webview";
-import { Platform } from "react-native";
+import { Platform, Image } from "react-native";
 
 import { TextComp } from "../../../components/Typography/Text";
 
 import { RestaurantType } from "../../../utils/types";
+import styled from "styled-components/native";
 
 type RestaurantPropType = {
   restaurant: RestaurantType;
 };
 
-const CompactImage = styled.Image`
+const CompactImage = styled(Image)`
   border-radius: 10px;
   width: 120px;
   height: 100px;
@@ -32,11 +32,14 @@ const Item = styled.View`
 const isAndroid = Platform.OS === "android";
 
 const CompactRestaurantCard = ({ restaurant }: RestaurantPropType) => {
-  const Image = isAndroid ? CompactWebview : CompactImage;
-
   return (
     <Item>
-      <Image source={{ uri: restaurant.photo[0] }} />
+      {isAndroid ? (
+        <CompactWebview source={{ uri: restaurant.photo[0] }} />
+      ) : (
+        <CompactImage source={{ uri: restaurant.photo[0] }} />
+      )}
+
       <TextComp variant="caption" numberOfLines={3}>
         {restaurant.name}
       </TextComp>

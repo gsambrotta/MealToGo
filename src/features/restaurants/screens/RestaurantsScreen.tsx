@@ -9,7 +9,7 @@ import { LocationContext } from "../../../services/location/LocationContext";
 import RestuarantCard from "../components/RestuarantCard/RestaurantCard";
 import SearchComponent from "../components/RestuarantCard/SearchComponent";
 
-import { RestaurantType, RestaurantavigationProp } from "../../../utils/types";
+import { RestaurantType, RestaurantNavigationProp } from "../../../utils/types";
 import styled from "styled-components/native";
 import { theme } from "../../../infrastructure/theme";
 
@@ -27,7 +27,7 @@ const LoadingSpinner = styled(ActivityIndicator)`
 `;
 
 type RestaurantsScreenProps = StackScreenProps<
-  RestaurantavigationProp,
+  RestaurantNavigationProp,
   "RestaurantsScreen"
 >;
 

@@ -1,12 +1,18 @@
-import React, { FC, useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import MapView, { Marker, Callout } from "react-native-maps";
 import { StyleSheet, View } from "react-native";
+import type { StackScreenProps } from "@react-navigation/stack";
+
 import SearchMap from "../components/SearchMap";
 import MarkerCustomCallout from "../components/MarkerCustomCallout";
 import { LocationContext } from "../../../services/location/LocationContext";
 import { RestaurantsContext } from "../../../services/restaurants/RestaurantsContext";
 
-const MapScreen: FC = () => {
+import { AppNavigationProp } from "../../../utils/types";
+
+type MapScreenProps = StackScreenProps<AppNavigationProp, "Map">;
+
+const MapScreen = ({ navigation }: MapScreenProps) => {
   const { location } = useContext(LocationContext);
   const { restaurants } = useContext(RestaurantsContext);
 
@@ -43,7 +49,11 @@ const MapScreen: FC = () => {
               }}
               title={restaurant.name}
             >
-              <Callout>
+              <Callout
+                onPress={() =>
+                  navigation.navigate("RestaurantDetailScreen", { restaurant })
+                }
+              >
                 <MarkerCustomCallout restaurant={restaurant} />
               </Callout>
             </Marker>
