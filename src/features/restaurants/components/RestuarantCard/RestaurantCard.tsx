@@ -28,7 +28,8 @@ const RestaurantCard = ({ restaurant }: RestaurantPropType) => {
     rating,
     isClosedTemporarily,
   }: RestaurantType = restaurant;
-  const ratingArray = Array.from(new Array(Math.floor(rating)));
+
+  const ratingArray = rating && Array.from(new Array(Math.floor(rating)));
 
   return (
     <CardContainer mode="elevated" elevation={5}>
@@ -37,9 +38,10 @@ const RestaurantCard = ({ restaurant }: RestaurantPropType) => {
         <TextComp variant="label">{name}</TextComp>
         <InfoRow>
           <Rating>
-            {ratingArray.map((rating, i) => (
-              <SvgXml xml={StarIcon} width={20} height={20} key={i} />
-            ))}
+            {ratingArray &&
+              ratingArray.map((rating, i) => (
+                <SvgXml xml={StarIcon} width={20} height={20} key={i} />
+              ))}
           </Rating>
           <InfoRowEnd>
             {isClosedTemporarily && (

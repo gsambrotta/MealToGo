@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { FlatList, ListRenderItem, View, Pressable } from "react-native";
+import { FlatList, ListRenderItem, View, TouchableOpacity } from "react-native";
 import { Text, ActivityIndicator } from "react-native-paper";
 import type { StackScreenProps } from "@react-navigation/stack";
 
@@ -38,9 +38,13 @@ const RestaurantsScreen = ({ navigation }: RestaurantsScreenProps) => {
 
   const renderRestaurantData: ListRenderItem<RestaurantType> = ({ item }) => {
     return (
-      <Pressable onPress={() => navigation.navigate("RestaurantDetails")}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("RestaurantDetailScreen", { restaurant: item })
+        }
+      >
         <RestuarantCard restaurant={item} />
-      </Pressable>
+      </TouchableOpacity>
     );
   };
 

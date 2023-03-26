@@ -6,7 +6,7 @@ export interface ThemeType {
 
 export type RestaurantavigationProp = {
   RestaurantsScreen: undefined;
-  RestaurantDetails: undefined;
+  RestaurantDetailScreen: { restaurant: RestaurantType };
 };
 
 export type RestaurantType = {
@@ -17,6 +17,12 @@ export type RestaurantType = {
   isOpenNow: boolean;
   rating: number;
   isClosedTemporarily: boolean;
+  geometry: {
+    location: {
+      lat: number;
+      lng: number;
+    };
+  };
 };
 
 export type RestaurantsType = {
@@ -49,4 +55,14 @@ export type geometryType = {
 export type LocationType = {
   lng: number;
   lat: number;
+  viewport: {
+    northeast: {
+      lat: number;
+      lng: number;
+    };
+    southwest: {
+      lat: number;
+      lng: number;
+    };
+  };
 };

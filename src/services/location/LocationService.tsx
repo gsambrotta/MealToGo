@@ -41,5 +41,5 @@ export const locationTransform = ({ results }: resultType) => {
     camelizeResult[0 as keyof typeof camelize];
   const { lat, lng } = geometry.location;
 
-  return { lat, lng };
+  return { lat, lng, viewport: geometry.viewport };
 };
