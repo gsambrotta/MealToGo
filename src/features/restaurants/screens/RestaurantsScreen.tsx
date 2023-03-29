@@ -8,7 +8,6 @@ import { RestaurantsContext } from "../../../services/restaurants/RestaurantsCon
 import { LocationContext } from "../../../services/location/LocationContext";
 import RestuarantCard from "../components/RestuarantCard/RestaurantCard";
 import SearchComponent from "../components/RestuarantCard/SearchComponent";
-
 import { RestaurantType, RestaurantNavigationProp } from "../../../utils/types";
 import styled from "styled-components/native";
 import { theme } from "../../../infrastructure/theme";

@@ -17,6 +17,7 @@ export type RestaurantNavigationProp = {
 };
 
 export type RestaurantType = {
+  placeId: string;
   name: string;
   icon: string;
   photo: string[];

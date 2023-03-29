@@ -3,6 +3,7 @@ import WebView from "react-native-webview";
 import { Platform, Image } from "react-native";
 
 import { TextComp } from "../../../components/Typography/Text";
+import FavouriteIcon from "../../../components/Favourites/FavouriteIcon";
 
 import { RestaurantType } from "../../../utils/types";
 import styled from "styled-components/native";
@@ -34,6 +35,7 @@ const isAndroid = Platform.OS === "android";
 const CompactRestaurantCard = ({ restaurant }: RestaurantPropType) => {
   return (
     <Item>
+      <FavouriteIcon restaurant={restaurant} />
       {isAndroid ? (
         <CompactWebview source={{ uri: restaurant.photo[0] }} />
       ) : (

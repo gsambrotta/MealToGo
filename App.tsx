@@ -10,6 +10,7 @@ import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 import { ThemeProvider } from "./src/infrastructure/theme/ThemeProvider";
 import { RestaurantsContextProvider } from "./src/services/restaurants/RestaurantsContext";
 import { LocationContextProvider } from "./src/services/location/LocationContext";
+import { FavouritesContextProvider } from "./src/services/favourites/FavouritesContext";
 import AppNavigator from "./src/infrastructure/navigation/AppNavigator";
 
 const App: React.FC = () => {
@@ -22,11 +23,13 @@ const App: React.FC = () => {
   return (
     <>
       <ThemeProvider>
-        <LocationContextProvider>
-          <RestaurantsContextProvider>
-            <AppNavigator />
-          </RestaurantsContextProvider>
-        </LocationContextProvider>
+        <FavouritesContextProvider>
+          <LocationContextProvider>
+            <RestaurantsContextProvider>
+              <AppNavigator />
+            </RestaurantsContextProvider>
+          </LocationContextProvider>
+        </FavouritesContextProvider>
       </ThemeProvider>
       <StatusBar />
     </>

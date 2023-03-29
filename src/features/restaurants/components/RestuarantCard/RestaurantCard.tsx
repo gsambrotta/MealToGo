@@ -4,6 +4,8 @@ import { SvgXml } from "react-native-svg";
 import StarIcon from "../../../../../assets/star";
 import OpenIcon from "../../../../../assets/open";
 import { TextComp } from "../../../../components/Typography/Text";
+import FavouriteIcon from "../../../../components/Favourites/FavouriteIcon";
+
 import { RestaurantType } from "../../../../utils/types";
 import {
   CardContainer,
@@ -33,6 +35,7 @@ const RestaurantCard = ({ restaurant }: RestaurantPropType) => {
 
   return (
     <CardContainer mode="elevated" elevation={5}>
+      <FavouriteIcon restaurant={restaurant} />
       <Card.Cover source={{ uri: photo[0] }} />
       <CardContent>
         <TextComp variant="label">{name}</TextComp>

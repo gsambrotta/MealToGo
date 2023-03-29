@@ -15,6 +15,10 @@ const initContextValue = {
   location: {
     lat: 37.7749295,
     lng: -122.4194155,
+    viewport: {
+      northeast: { lat: 37.812, lng: -122.3482 },
+      southwest: { lat: 37.70339999999999, lng: -122.527 },
+    },
   },
   isLoadingLocation: false,
   errorLocation: false,
@@ -30,6 +34,10 @@ export const LocationContextProvider: FC<ChildrenType> = (props) => {
   const [location, setLocation] = useState<LocationType>({
     lat: 37.7749295,
     lng: -122.4194155,
+    viewport: {
+      northeast: { lat: 37.812, lng: -122.3482 },
+      southwest: { lat: 37.70339999999999, lng: -122.527 },
+    },
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | unknown>(null);
