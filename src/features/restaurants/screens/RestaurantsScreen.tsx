@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { FlatList, ListRenderItem, View, TouchableOpacity } from "react-native";
 import { Text, ActivityIndicator } from "react-native-paper";
 import type { StackScreenProps } from "@react-navigation/stack";
@@ -6,11 +6,13 @@ import type { StackScreenProps } from "@react-navigation/stack";
 import { SafeArea } from "../../../components/SafeArea";
 import { RestaurantsContext } from "../../../services/restaurants/RestaurantsContext";
 import { LocationContext } from "../../../services/location/LocationContext";
+import { FavouritesContext } from "../../../services/favourites/FavouritesContext";
 import RestuarantCard from "../components/RestuarantCard/RestaurantCard";
 import SearchComponent from "../components/RestuarantCard/SearchComponent";
 import { RestaurantType, RestaurantNavigationProp } from "../../../utils/types";
 import styled from "styled-components/native";
 import { theme } from "../../../infrastructure/theme";
+import FavouriteBar from "../../../components/Favourites/FavouriteBar";
 
 // .attr -> give specific props to the FlatList
 const RestaurantList = styled(FlatList).attrs({
@@ -32,8 +34,11 @@ type RestaurantsScreenProps = StackScreenProps<
 
 const RestaurantsScreen = ({ navigation }: RestaurantsScreenProps) => {
   const { restaurants, isLoading, error } = useContext(RestaurantsContext);
+  const { favourites } = useContext(FavouritesContext);
   const { location, isLoadingLocation, errorLocation } =
     useContext(LocationContext);
+
+  const [isToggle, setIsToggle] = useState(false);
 
   const renderRestaurantData: ListRenderItem<RestaurantType> = ({ item }) => {
     return (
@@ -50,7 +55,10 @@ const RestaurantsScreen = ({ navigation }: RestaurantsScreenProps) => {
   return (
     <SafeArea>
       <>
-        <SearchComponent />
+        <SearchComponent
+          isFavouritesToggle={isToggle}
+          onFavouritesToggle={() => setIsToggle(!isToggle)}
+        />
         {(isLoading || isLoadingLocation) && (
           <LoadingSpinner
             size="large"
@@ -66,12 +74,20 @@ const RestaurantsScreen = ({ navigation }: RestaurantsScreenProps) => {
                 <Text> {`An error occurred: ${error}`}</Text>
               </View>
             ) : (
-              <RestaurantList
-                data={restaurants}
-                // @ts-ignore
-                renderItem={renderRestaurantData}
-                keyExtractor={(item: any, index: number) => item.name}
-              />
+              <>
+                {isToggle && (
+                  <FavouriteBar
+                    favourites={favourites}
+                    onNavigate={navigation.navigate}
+                  />
+                )}
+                <RestaurantList
+                  data={restaurants}
+                  // @ts-ignore
+                  renderItem={renderRestaurantData}
+                  keyExtractor={(item: any, index: number) => item.name}
+                />
+              </>
             )}
           </>
         )}

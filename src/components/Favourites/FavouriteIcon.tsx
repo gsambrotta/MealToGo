@@ -4,11 +4,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { FavouritesContext } from "../../services/favourites/FavouritesContext";
 
-import { RestaurantType } from "../../utils/types";
-
-type RestaurantPropType = {
-  restaurant: RestaurantType;
-};
+import { RestaurantType, RestaurantPropType } from "../../utils/types";
 
 const FavouriteButton = styled(TouchableOpacity)`
   position: absolute;

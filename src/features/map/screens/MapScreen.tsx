@@ -17,6 +17,7 @@ const MapScreen = ({ navigation }: MapScreenProps) => {
   const { restaurants } = useContext(RestaurantsContext);
 
   const [latDelta, setLatDelta] = useState(0);
+  const [isToggle, setIsToggle] = useState(false);
 
   const { lat, lng, viewport } = location;
 
@@ -29,7 +30,10 @@ const MapScreen = ({ navigation }: MapScreenProps) => {
 
   return (
     <View style={styles.container}>
-      <SearchMap />
+      <SearchMap
+        isFavouritesToggle={isToggle}
+        onFavouritesToggle={() => setIsToggle(!isToggle)}
+      />
       <MapView
         style={styles.map}
         region={{

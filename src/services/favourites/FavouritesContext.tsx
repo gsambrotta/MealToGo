@@ -1,4 +1,5 @@
 import React, { FC, useState, createContext, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { ChildrenType, RestaurantType } from "../../utils/types";
 
@@ -20,6 +21,28 @@ export const FavouritesContext =
 export const FavouritesContextProvider: FC<ChildrenType> = (props) => {
   const [favourites, setFavourites] = useState<[] | RestaurantType[]>([]);
 
+  const storeFavourites = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("@favourites", jsonValue);
+    } catch (error) {
+      console.log("err storing Fav localstorage", error);
+    }
+  };
+
+  const getFavourites = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@favourites");
+      // return jsonValue != null ? JSON.parse(jsonValue) : null;
+
+      if (value !== null) {
+        setFavourites(JSON.parse(value));
+      }
+    } catch (error) {
+      console.log("err getting Fav localstorage", error);
+    }
+  };
+
   const add = (restaurant: RestaurantType) => {
     const favAdd = [...favourites, restaurant];
     setFavourites(favAdd);
@@ -32,6 +55,14 @@ export const FavouritesContextProvider: FC<ChildrenType> = (props) => {
 
     setFavourites(newFavourites);
   };
+
+  useEffect(() => {
+    getFavourites();
+  }, []);
+
+  useEffect(() => {
+    storeFavourites(favourites);
+  }, [favourites]);
 
   return (
     <FavouritesContext.Provider

@@ -6,7 +6,7 @@ import OpenIcon from "../../../../../assets/open";
 import { TextComp } from "../../../../components/Typography/Text";
 import FavouriteIcon from "../../../../components/Favourites/FavouriteIcon";
 
-import { RestaurantType } from "../../../../utils/types";
+import { RestaurantType, RestaurantPropType } from "../../../../utils/types";
 import {
   CardContainer,
   CardContent,
@@ -15,10 +15,6 @@ import {
   InfoRowEnd,
   CusineIcon,
 } from "./RestaurantCard.style";
-
-type RestaurantPropType = {
-  restaurant: RestaurantType;
-};
 
 const RestaurantCard = ({ restaurant }: RestaurantPropType) => {
   const {

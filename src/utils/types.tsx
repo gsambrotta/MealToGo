@@ -33,6 +33,10 @@ export type RestaurantType = {
   };
 };
 
+export type RestaurantPropType = {
+  restaurant: RestaurantType;
+};
+
 export type RestaurantsType = {
   restaurants: RestaurantType[];
 };
@@ -73,4 +77,9 @@ export type LocationType = {
       lng: number;
     };
   };
+};
+
+export type SearchProps = {
+  isFavouritesToggle: boolean;
+  onFavouritesToggle: () => void;
 };

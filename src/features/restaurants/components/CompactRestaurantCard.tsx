@@ -8,8 +8,9 @@ import FavouriteIcon from "../../../components/Favourites/FavouriteIcon";
 import { RestaurantType } from "../../../utils/types";
 import styled from "styled-components/native";
 
-type RestaurantPropType = {
+export type CompactCardPropType = {
   restaurant: RestaurantType;
+  isMap: boolean;
 };
 
 const CompactImage = styled(Image)`
@@ -32,11 +33,11 @@ const Item = styled.View`
 
 const isAndroid = Platform.OS === "android";
 
-const CompactRestaurantCard = ({ restaurant }: RestaurantPropType) => {
+const CompactRestaurantCard = ({ restaurant, isMap }: CompactCardPropType) => {
   return (
     <Item>
       <FavouriteIcon restaurant={restaurant} />
-      {isAndroid ? (
+      {isAndroid && isMap ? (
         <CompactWebview source={{ uri: restaurant.photo[0] }} />
       ) : (
         <CompactImage source={{ uri: restaurant.photo[0] }} />
