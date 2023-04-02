@@ -1,5 +1,4 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -26,25 +25,23 @@ const TAB_ICON: TabIconProps = {
 
 const AppNavigator = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
-            const iconName: keyof typeof Ionicons.glyphMap =
-              TAB_ICON[route.name as keyof TabIconProps];
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          const iconName: keyof typeof Ionicons.glyphMap =
+            TAB_ICON[route.name as keyof TabIconProps];
 
-            return <IconComp name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: "tomato",
-          tabBarInactiveTintColor: "gray",
-        })}
-      >
-        <Tab.Screen name="Restaurants" component={RestaurantsNavigation} />
-        <Tab.Screen name="Map" component={MapScreen} />
+          return <IconComp name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: "tomato",
+        tabBarInactiveTintColor: "gray",
+      })}
+    >
+      <Tab.Screen name="RestaurantsScreen" component={RestaurantsNavigation} />
+      <Tab.Screen name="Map" component={MapScreen} />
 
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
   );
 };
 

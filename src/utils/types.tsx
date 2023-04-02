@@ -16,6 +16,12 @@ export type RestaurantNavigationProp = {
   RestaurantDetailScreen: { restaurant: RestaurantType };
 };
 
+export type AccountNavigationProp = {
+  AccountScreen: undefined;
+  LoginScreen: undefined;
+  RegisterScreen: undefined;
+};
+
 export type RestaurantType = {
   placeId: string;
   name: string;

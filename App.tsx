@@ -1,5 +1,6 @@
 import "react-native-gesture-handler";
 import React from "react";
+import { initializeApp } from "firebase/app";
 import { StatusBar } from "react-native";
 import {
   useFonts as useOswald,
@@ -11,7 +12,19 @@ import { ThemeProvider } from "./src/infrastructure/theme/ThemeProvider";
 import { RestaurantsContextProvider } from "./src/services/restaurants/RestaurantsContext";
 import { LocationContextProvider } from "./src/services/location/LocationContext";
 import { FavouritesContextProvider } from "./src/services/favourites/FavouritesContext";
-import AppNavigator from "./src/infrastructure/navigation/AppNavigator";
+import { AuthenticationContextProvider } from "./src/services/authentication/AuthenticationContext";
+import { Navigation } from "./src/infrastructure/navigation/index";
+
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBr1Ra3uDRpAnOJZWOZDVrAYbkNZMmfdjM",
+  authDomain: "mealstogo-3b93d.firebaseapp.com",
+  projectId: "mealstogo-3b93d",
+  storageBucket: "mealstogo-3b93d.appspot.com",
+  messagingSenderId: "784949645574",
+  appId: "1:784949645574:web:628affab9f9dede4cf0e87",
+};
+initializeApp(firebaseConfig);
 
 const App: React.FC = () => {
   const [oswaldLoaded] = useOswald({ Oswald_400Regular });
@@ -23,13 +36,15 @@ const App: React.FC = () => {
   return (
     <>
       <ThemeProvider>
-        <FavouritesContextProvider>
-          <LocationContextProvider>
-            <RestaurantsContextProvider>
-              <AppNavigator />
-            </RestaurantsContextProvider>
-          </LocationContextProvider>
-        </FavouritesContextProvider>
+        <AuthenticationContextProvider>
+          <FavouritesContextProvider>
+            <LocationContextProvider>
+              <RestaurantsContextProvider>
+                <Navigation />
+              </RestaurantsContextProvider>
+            </LocationContextProvider>
+          </FavouritesContextProvider>
+        </AuthenticationContextProvider>
       </ThemeProvider>
       <StatusBar />
     </>
