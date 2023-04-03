@@ -5,15 +5,11 @@ export interface ThemeType {
 }
 
 export type AppNavigationProp = {
+  RestaurantsNav: undefined;
   RestaurantsScreen: undefined;
   RestaurantDetailScreen: { restaurant: RestaurantType };
   Map: undefined;
   Settings: undefined;
-};
-
-export type RestaurantNavigationProp = {
-  RestaurantsScreen: undefined;
-  RestaurantDetailScreen: { restaurant: RestaurantType };
 };
 
 export type AccountNavigationProp = {

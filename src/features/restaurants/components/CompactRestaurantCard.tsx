@@ -10,7 +10,7 @@ import styled from "styled-components/native";
 
 export type CompactCardPropType = {
   restaurant: RestaurantType;
-  isMap: boolean;
+  isMap?: boolean;
 };
 
 const CompactImage = styled(Image)`
@@ -33,7 +33,10 @@ const Item = styled.View`
 
 const isAndroid = Platform.OS === "android";
 
-const CompactRestaurantCard = ({ restaurant, isMap }: CompactCardPropType) => {
+const CompactRestaurantCard = ({
+  restaurant,
+  isMap = false,
+}: CompactCardPropType) => {
   return (
     <Item>
       <FavouriteIcon restaurant={restaurant} />

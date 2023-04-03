@@ -28,8 +28,8 @@ type positionVariantType = {
 };
 
 type Variants = {
-  position: string;
-  size: string;
+  position?: string;
+  size?: string;
   theme: DefaultTheme;
 };
 
@@ -42,10 +42,11 @@ const getVariant = (position: string, size: string, theme: DefaultTheme) => {
 };
 
 export const Spacer = styled.View`
-  ${({ position, size, theme }: Variants) => getVariant(position, size, theme)}
+  ${({ position = "top", size = "small", theme }: Variants) =>
+    getVariant(position, size, theme)}
 `;
 
-Spacer.defaultProps = {
-  position: "top",
-  size: "small",
-};
+// Spacer.defaultProps = {
+//   position: "top",
+//   size: "small",
+// };

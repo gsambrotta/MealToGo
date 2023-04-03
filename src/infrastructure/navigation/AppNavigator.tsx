@@ -12,13 +12,13 @@ import { AppNavigationProp } from "../../utils/types";
 const Tab = createBottomTabNavigator<AppNavigationProp>();
 
 interface TabIconProps {
-  Restaurants: keyof typeof Ionicons.glyphMap;
+  RestaurantsNav: keyof typeof Ionicons.glyphMap;
   Settings: keyof typeof Ionicons.glyphMap;
   Map: keyof typeof Ionicons.glyphMap;
 }
 
 const TAB_ICON: TabIconProps = {
-  Restaurants: "fast-food-outline",
+  RestaurantsNav: "fast-food-outline",
   Settings: "settings-outline",
   Map: "map",
 };
@@ -37,7 +37,7 @@ const AppNavigator = () => {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <Tab.Screen name="RestaurantsScreen" component={RestaurantsNavigation} />
+      <Tab.Screen name="RestaurantsNav" component={RestaurantsNavigation} />
       <Tab.Screen name="Map" component={MapScreen} />
 
       <Tab.Screen name="Settings" component={SettingsScreen} />
