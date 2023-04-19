@@ -9,9 +9,6 @@ import {
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 
 import { ThemeProvider } from "./src/infrastructure/theme/ThemeProvider";
-import { RestaurantsContextProvider } from "./src/services/restaurants/RestaurantsContext";
-import { LocationContextProvider } from "./src/services/location/LocationContext";
-import { FavouritesContextProvider } from "./src/services/favourites/FavouritesContext";
 import { AuthenticationContextProvider } from "./src/services/authentication/AuthenticationContext";
 import { Navigation } from "./src/infrastructure/navigation/index";
 
@@ -37,13 +34,9 @@ const App: React.FC = () => {
     <>
       <ThemeProvider>
         <AuthenticationContextProvider>
-          <FavouritesContextProvider>
-            <LocationContextProvider>
-              <RestaurantsContextProvider>
+
                 <Navigation />
-              </RestaurantsContextProvider>
-            </LocationContextProvider>
-          </FavouritesContextProvider>
+
         </AuthenticationContextProvider>
       </ThemeProvider>
       <StatusBar />

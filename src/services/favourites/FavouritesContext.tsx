@@ -1,5 +1,6 @@
-import React, { FC, useState, createContext, useEffect } from "react";
+import React, { FC, useState, createContext, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthenticationContext } from "../authentication/AuthenticationContext"
 
 import { ChildrenType, RestaurantType } from "../../utils/types";
 
@@ -20,19 +21,20 @@ export const FavouritesContext =
 
 export const FavouritesContextProvider: FC<ChildrenType> = (props) => {
   const [favourites, setFavourites] = useState<[] | RestaurantType[]>([]);
+  const { user } = useContext(AuthenticationContext)
 
-  const storeFavourites = async (value) => {
+  const storeFavourites = async (value: [] | RestaurantType[], userId: string) => {
     try {
       const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem("@favourites", jsonValue);
+      await AsyncStorage.setItem(`@favourites-${userId}`, jsonValue);
     } catch (error) {
       console.log("err storing Fav localstorage", error);
     }
   };
 
-  const getFavourites = async () => {
+  const getFavourites = async (userId: string) => {
     try {
-      const value = await AsyncStorage.getItem("@favourites");
+      const value = await AsyncStorage.getItem(`@favourites-${userId}`);
       // return jsonValue != null ? JSON.parse(jsonValue) : null;
 
       if (value !== null) {
@@ -57,12 +59,12 @@ export const FavouritesContextProvider: FC<ChildrenType> = (props) => {
   };
 
   useEffect(() => {
-    getFavourites();
-  }, []);
+    user && getFavourites(user.user.uid);
+  }, [user]);
 
   useEffect(() => {
-    storeFavourites(favourites);
-  }, [favourites]);
+    user && storeFavourites(favourites, user.user.uid);
+  }, [favourites, user]);
 
   return (
     <FavouritesContext.Provider

@@ -39,6 +39,16 @@ export const AuthenticationContextProvider: FC<ChildrenType> = ({
   const [error, setError] = useState<string>("");
   const [user, setUser] = useState<UserCredential | null>(null);
 
+  // Check if user exist on loading, so authetication is persisten
+  onAuthStateChanged((usr) => {
+    if(usr) {
+      setUser(usr)
+      setIsLoading(false)
+    } else {
+      setIsLoading(false)
+    }
+  }) 
+
   const auth = useRef(getAuth()).current;
 
   const onLogin = (email: string, password: string) => {
@@ -62,10 +72,11 @@ export const AuthenticationContextProvider: FC<ChildrenType> = ({
     password: string,
     repeatedPassword: string
   ) => {
+    setIsLoading(true);
+
     if (password !== repeatedPassword) {
       return setError("Error: Passwords do not match");
     }
-    setIsLoading(true);
     registerRequest(auth, email, password)
       .then((u) => {
         setUser(u);
@@ -79,6 +90,11 @@ export const AuthenticationContextProvider: FC<ChildrenType> = ({
       });
   };
 
+  const onLogout =() => {
+    setUser(null)
+    signOut()
+  }
+
   return (
     <AuthenticationContext.Provider
       value={{
@@ -88,6 +104,7 @@ export const AuthenticationContextProvider: FC<ChildrenType> = ({
         error,
         onLogin,
         onRegister,
+        onLogout  
       }}
     >
       {children}

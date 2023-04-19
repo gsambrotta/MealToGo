@@ -3,6 +3,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 import RestaurantsNavigation from "../../infrastructure/navigation/RestaurantsNavigation";
+import { RestaurantsContextProvider } from "../../services/restaurants/RestaurantsContext";
+import { LocationContextProvider } from "../../src/services/location/LocationContext";
+import { FavouritesContextProvider } from "../../src/services/favourites/FavouritesContext";
 import SettingsScreen from "../../features/restaurants/screens/SettingsScreen";
 import MapScreen from "../../features/map/screens/MapScreen";
 import { IconComp } from "../../components/Icon";
@@ -25,6 +28,9 @@ const TAB_ICON: TabIconProps = {
 
 const AppNavigator = () => {
   return (
+    <FavouritesContextProvider>
+    <LocationContextProvider>
+      <RestaurantsContextProvider>
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
@@ -42,6 +48,9 @@ const AppNavigator = () => {
 
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
+    </RestaurantsContextProvider>
+            </LocationContextProvider>
+          </FavouritesContextProvider>
   );
 };
 
