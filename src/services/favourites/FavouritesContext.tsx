@@ -1,6 +1,12 @@
-import React, { FC, useState, createContext, useEffect, useContext } from "react";
+import React, {
+  FC,
+  useState,
+  createContext,
+  useEffect,
+  useContext,
+} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AuthenticationContext } from "../authentication/AuthenticationContext"
+import { AuthenticationContext } from "../authentication/AuthenticationContext";
 
 import { ChildrenType, RestaurantType } from "../../utils/types";
 
@@ -21,9 +27,12 @@ export const FavouritesContext =
 
 export const FavouritesContextProvider: FC<ChildrenType> = (props) => {
   const [favourites, setFavourites] = useState<[] | RestaurantType[]>([]);
-  const { user } = useContext(AuthenticationContext)
+  const { user } = useContext(AuthenticationContext);
 
-  const storeFavourites = async (value: [] | RestaurantType[], userId: string) => {
+  const storeFavourites = async (
+    value: [] | RestaurantType[],
+    userId: string
+  ) => {
     try {
       const jsonValue = JSON.stringify(value);
       await AsyncStorage.setItem(`@favourites-${userId}`, jsonValue);
@@ -59,11 +68,11 @@ export const FavouritesContextProvider: FC<ChildrenType> = (props) => {
   };
 
   useEffect(() => {
-    user && getFavourites(user.user.uid);
+    user && getFavourites(user.uid);
   }, [user]);
 
   useEffect(() => {
-    user && storeFavourites(favourites, user.user.uid);
+    user && storeFavourites(favourites, user.uid);
   }, [favourites, user]);
 
   return (

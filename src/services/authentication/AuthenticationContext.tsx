@@ -1,11 +1,10 @@
 import React, { FC, useState, createContext, useRef } from "react";
 import {
   signOut,
-  createUserWithEmailAndPassword,
   onAuthStateChanged,
   getAuth,
   UserCredential,
-  Auth,
+  UserInfo,
 } from "firebase/auth";
 import { loginRequest, registerRequest } from "./AuthenicationService";
 
@@ -15,9 +14,10 @@ type contextValueType = {
   isAutheticated: boolean;
   isLoading: boolean;
   error: string;
-  user: UserCredential | null;
+  user: UserInfo | UserCredential | null;
   onLogin: (arg1: string, arg2: string) => void;
   onRegister: (arg1: string, arg2: string, arg3: string) => void;
+  onLogout: () => void;
 };
 
 const initContextValue = {
@@ -27,6 +27,7 @@ const initContextValue = {
   user: null,
   onLogin: () => null,
   onRegister: () => null,
+  onLogout: () => null,
 };
 
 export const AuthenticationContext =
@@ -37,19 +38,20 @@ export const AuthenticationContextProvider: FC<ChildrenType> = ({
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const [user, setUser] = useState<UserCredential | null>(null);
-
-  // Check if user exist on loading, so authetication is persisten
-  onAuthStateChanged((usr) => {
-    if(usr) {
-      setUser(usr)
-      setIsLoading(false)
-    } else {
-      setIsLoading(false)
-    }
-  }) 
+  const [user, setUser] = useState<UserInfo | UserCredential | null>(null);
 
   const auth = useRef(getAuth()).current;
+
+  // Check if user exist on loading, so authetication is persisten
+  onAuthStateChanged(auth, (usr) => {
+    if (usr) {
+      setUser(usr);
+      setIsLoading(false);
+    } else {
+      setUser(null);
+      setIsLoading(false);
+    }
+  });
 
   const onLogin = (email: string, password: string) => {
     setIsLoading(true);
@@ -65,6 +67,11 @@ export const AuthenticationContextProvider: FC<ChildrenType> = ({
         setError(error.toString());
         return;
       });
+  };
+
+  const onLogout = () => {
+    setUser(null);
+    signOut(auth);
   };
 
   const onRegister = (
@@ -90,11 +97,6 @@ export const AuthenticationContextProvider: FC<ChildrenType> = ({
       });
   };
 
-  const onLogout =() => {
-    setUser(null)
-    signOut()
-  }
-
   return (
     <AuthenticationContext.Provider
       value={{
@@ -104,7 +106,7 @@ export const AuthenticationContextProvider: FC<ChildrenType> = ({
         error,
         onLogin,
         onRegister,
-        onLogout  
+        onLogout,
       }}
     >
       {children}

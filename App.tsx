@@ -34,9 +34,7 @@ const App: React.FC = () => {
     <>
       <ThemeProvider>
         <AuthenticationContextProvider>
-
-                <Navigation />
-
+          <Navigation />
         </AuthenticationContextProvider>
       </ThemeProvider>
       <StatusBar />
