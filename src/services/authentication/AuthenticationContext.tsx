@@ -1,11 +1,5 @@
 import React, { FC, useState, createContext, useRef } from "react";
-import {
-  signOut,
-  onAuthStateChanged,
-  getAuth,
-  UserCredential,
-  UserInfo,
-} from "firebase/auth";
+import { signOut, onAuthStateChanged, getAuth } from "firebase/auth";
 import { loginRequest, registerRequest } from "./AuthenicationService";
 
 import { ChildrenType } from "../../utils/types";
@@ -14,7 +8,7 @@ type contextValueType = {
   isAutheticated: boolean;
   isLoading: boolean;
   error: string;
-  user: UserInfo | UserCredential | null;
+  user: any;
   onLogin: (arg1: string, arg2: string) => void;
   onRegister: (arg1: string, arg2: string, arg3: string) => void;
   onLogout: () => void;
@@ -38,7 +32,7 @@ export const AuthenticationContextProvider: FC<ChildrenType> = ({
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const [user, setUser] = useState<UserInfo | UserCredential | null>(null);
+  const [user, setUser] = useState<any>(null);
 
   const auth = useRef(getAuth()).current;
 

@@ -9,13 +9,17 @@ export type AppNavigationProp = {
   RestaurantsScreen: undefined;
   RestaurantDetailScreen: { restaurant: RestaurantType };
   Map: undefined;
-  Settings: undefined;
+  SettingsNav: undefined;
 };
 
 export type AccountNavigationProp = {
   AccountScreen: undefined;
   LoginScreen: undefined;
   RegisterScreen: undefined;
+};
+
+export type SettingsNavigationProp = {
+  SettingsScreen: undefined;
 };
 
 export type RestaurantType = {

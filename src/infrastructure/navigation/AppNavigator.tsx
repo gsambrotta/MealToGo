@@ -3,10 +3,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 import RestaurantsNavigation from "../../infrastructure/navigation/RestaurantsNavigation";
+import SettingsNavigator from "../../infrastructure/navigation/SettingsNavigator";
 import { RestaurantsContextProvider } from "../../services/restaurants/RestaurantsContext";
 import { LocationContextProvider } from "../../services/location/LocationContext";
 import { FavouritesContextProvider } from "../../services/favourites/FavouritesContext";
-import SettingsScreen from "../../features/restaurants/screens/SettingsScreen";
+
 import MapScreen from "../../features/map/screens/MapScreen";
 import { IconComp } from "../../components/Icon";
 
@@ -16,13 +17,13 @@ const Tab = createBottomTabNavigator<AppNavigationProp>();
 
 interface TabIconProps {
   RestaurantsNav: keyof typeof Ionicons.glyphMap;
-  Settings: keyof typeof Ionicons.glyphMap;
+  SettingsNav: keyof typeof Ionicons.glyphMap;
   Map: keyof typeof Ionicons.glyphMap;
 }
 
 const TAB_ICON: TabIconProps = {
   RestaurantsNav: "fast-food-outline",
-  Settings: "settings-outline",
+  SettingsNav: "settings-outline",
   Map: "map",
 };
 
@@ -49,7 +50,7 @@ const AppNavigator = () => {
             />
             <Tab.Screen name="Map" component={MapScreen} />
 
-            <Tab.Screen name="Settings" component={SettingsScreen} />
+            <Tab.Screen name="SettingsNav" component={SettingsNavigator} />
           </Tab.Navigator>
         </RestaurantsContextProvider>
       </LocationContextProvider>

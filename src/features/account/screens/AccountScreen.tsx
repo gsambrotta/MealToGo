@@ -1,8 +1,8 @@
 import React from "react";
 import type { StackScreenProps } from "@react-navigation/stack";
 import LottieView from "lottie-react-native";
-
 import { Spacer } from "../../../components/Spacer";
+
 import {
   ImageBackground,
   AccountCover,
