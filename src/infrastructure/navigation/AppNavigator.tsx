@@ -16,14 +16,14 @@ import { AppNavigationProp } from "../../utils/types";
 const Tab = createBottomTabNavigator<AppNavigationProp>();
 
 interface TabIconProps {
-  RestaurantsNav: keyof typeof Ionicons.glyphMap;
-  SettingsNav: keyof typeof Ionicons.glyphMap;
+  Restaurants: keyof typeof Ionicons.glyphMap;
+  Settings: keyof typeof Ionicons.glyphMap;
   Map: keyof typeof Ionicons.glyphMap;
 }
 
 const TAB_ICON: TabIconProps = {
-  RestaurantsNav: "fast-food-outline",
-  SettingsNav: "settings-outline",
+  Restaurants: "fast-food-outline",
+  Settings: "settings-outline",
   Map: "map",
 };
 
@@ -44,13 +44,10 @@ const AppNavigator = () => {
               tabBarInactiveTintColor: "gray",
             })}
           >
-            <Tab.Screen
-              name="RestaurantsNav"
-              component={RestaurantsNavigation}
-            />
+            <Tab.Screen name="Restaurants" component={RestaurantsNavigation} />
             <Tab.Screen name="Map" component={MapScreen} />
 
-            <Tab.Screen name="SettingsNav" component={SettingsNavigator} />
+            <Tab.Screen name="Settings" component={SettingsNavigator} />
           </Tab.Navigator>
         </RestaurantsContextProvider>
       </LocationContextProvider>

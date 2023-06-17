@@ -5,11 +5,12 @@ export interface ThemeType {
 }
 
 export type AppNavigationProp = {
-  RestaurantsNav: undefined;
+  Restaurants: undefined;
   RestaurantsScreen: undefined;
   RestaurantDetailScreen: { restaurant: RestaurantType };
   Map: undefined;
-  SettingsNav: undefined;
+  Settings: undefined;
+  FavouriteScreen: undefined;
 };
 
 export type AccountNavigationProp = {
@@ -20,6 +21,7 @@ export type AccountNavigationProp = {
 
 export type SettingsNavigationProp = {
   SettingsScreen: undefined;
+  FavouriteScreen: undefined;
 };
 
 export type RestaurantType = {

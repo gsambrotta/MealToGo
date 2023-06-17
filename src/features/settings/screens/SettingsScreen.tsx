@@ -41,7 +41,7 @@ const SettingsScreen = ({ navigation }: SettingsScreenProps) => {
           left={(props) => (
             <List.Icon {...props} color={colors.ui.error} icon="heart" />
           )}
-          // onPress={() => navigation.navigate("FavouriteScreen")}
+          onPress={() => navigation.navigate("FavouriteScreen")}
         />
         <Spacer />
         <SettingsItem
