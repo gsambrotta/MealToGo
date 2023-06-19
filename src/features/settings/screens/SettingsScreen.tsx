@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { List, Avatar } from "react-native-paper";
+import { TouchableOpacity } from "react-native";
 import type { StackScreenProps } from "@react-navigation/stack";
 import styled from "styled-components/native";
 
@@ -29,7 +30,9 @@ const SettingsScreen = ({ navigation }: SettingsScreenProps) => {
   return (
     <SafeArea>
       <AvatarContainer>
-        <Avatar.Icon size={180} icon="human" />
+        <TouchableOpacity onPress={() => navigation.navigate("CameraScreen")}>
+          <Avatar.Icon size={180} icon="human" />
+        </TouchableOpacity>
         <Spacer size="large">
           <TextComp variant="label">{user?.email}</TextComp>
         </Spacer>
@@ -44,7 +47,7 @@ const SettingsScreen = ({ navigation }: SettingsScreenProps) => {
           onPress={() => navigation.navigate("FavouriteScreen")}
         />
         <Spacer />
-        <SettingsItem
+        {/* <SettingsItem
           title="Payment"
           left={(props) => (
             <List.Icon {...props} color={colors.ui.secondary} icon="cart" />
@@ -58,7 +61,7 @@ const SettingsScreen = ({ navigation }: SettingsScreenProps) => {
             <List.Icon {...props} color={colors.ui.secondary} icon="history" />
           )}
           onPress={() => null}
-        />
+        /> */}
         <Spacer />
         <SettingsItem
           title="Logout"

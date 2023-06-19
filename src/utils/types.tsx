@@ -22,6 +22,7 @@ export type AccountNavigationProp = {
 export type SettingsNavigationProp = {
   SettingsScreen: undefined;
   FavouriteScreen: undefined;
+  CameraScreen: undefined;
 };
 
 export type RestaurantType = {
