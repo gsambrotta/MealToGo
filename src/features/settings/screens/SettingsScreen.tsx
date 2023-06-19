@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useCallback } from "react";
 import { List, Avatar } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import type { StackScreenProps } from "@react-navigation/stack";
 import styled from "styled-components/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { SafeArea } from "../../../components/SafeArea";
 import { AuthenticationContext } from "../../../services/authentication/AuthenticationContext";
@@ -27,11 +29,35 @@ type SettingsScreenProps = StackScreenProps<
 
 const SettingsScreen = ({ navigation }: SettingsScreenProps) => {
   const { onLogout, user } = useContext(AuthenticationContext);
+  const [photo, setPhoto] = useState("");
+
+  const getProfilePic = async (currUser: any) => {
+    try {
+      const photoUri = await AsyncStorage.getItem(`@profile-${currUser.id}`);
+
+      if (photoUri !== null) {
+        setPhoto(photoUri);
+      }
+    } catch (error) {
+      console.log("err getting Fav localstorage", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getProfilePic(user);
+    }, [user])
+  );
+
   return (
     <SafeArea>
       <AvatarContainer>
         <TouchableOpacity onPress={() => navigation.navigate("CameraScreen")}>
-          <Avatar.Icon size={180} icon="human" />
+          {!photo ? (
+            <Avatar.Icon size={180} icon="human" />
+          ) : (
+            <Avatar.Image size={180} source={{ uri: photo }} />
+          )}
         </TouchableOpacity>
         <Spacer size="large">
           <TextComp variant="label">{user?.email}</TextComp>

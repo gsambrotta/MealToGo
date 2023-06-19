@@ -1,10 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { View } from "react-native";
 import { Button } from "react-native-paper";
-import { TextComp } from "../../../components/Typography/Text";
 import { Camera, CameraType } from "expo-camera";
-import styled from "styled-components/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TextComp } from "../../../components/Typography/Text";
+import { AuthenticationContext } from "../../../services/authentication/AuthenticationContext";
 
+import styled from "styled-components/native";
 import { AppNavigationProp } from "../../../utils/types";
 import { StackScreenProps } from "@react-navigation/stack";
 
@@ -32,6 +34,7 @@ const FavouriteScreen = ({ navigation }: FavouriteScreenProps) => {
   const [type, setType] = useState(CameraType.front);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const cameraRef: React.MutableRefObject<Camera | null> = useRef(null);
+  const { user } = useContext(AuthenticationContext);
 
   if (!permission) {
     // Camera permissions are still loading
@@ -58,8 +61,13 @@ const FavouriteScreen = ({ navigation }: FavouriteScreenProps) => {
 
   const clickCamera = async () => {
     if (cameraRef.current) {
-      const photo = await cameraRef.current.takePictureAsync();
-      console.log({ photo });
+      try {
+        const photo = await cameraRef.current.takePictureAsync();
+        await AsyncStorage.setItem(`@profile-${user.id}`, photo.uri);
+        navigation.goBack();
+      } catch (error) {
+        console.log("err storing Fav localstorage", error);
+      }
     }
   };
 
