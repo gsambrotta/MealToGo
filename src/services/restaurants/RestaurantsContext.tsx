@@ -35,7 +35,7 @@ export const RestaurantsContextProvider: FC<ChildrenType> = (props) => {
     setIsLoading(true);
     setRestaurants([]);
 
-    setTimeout(async () => {
+    const fetchData = async () => {
       try {
         const res = await restaurantsRequest(loc);
         if (res) {
@@ -49,7 +49,8 @@ export const RestaurantsContextProvider: FC<ChildrenType> = (props) => {
         setError(err);
         setIsLoading(false);
       }
-    }, 1000);
+    };
+    fetchData();
   };
 
   useEffect(() => {

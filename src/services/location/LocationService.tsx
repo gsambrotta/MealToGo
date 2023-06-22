@@ -1,6 +1,6 @@
-import { locations } from "./locationMock";
 import camelize from "camelize-ts";
 import { geometryType } from "../../utils/types";
+import { host } from "../../utils/env";
 
 type resultType = {
   results: geometryType[];
@@ -25,14 +25,16 @@ const geoInit = {
 
 export const locationRequest = (searchTerm: string) => {
   if (!searchTerm) return;
-  return new Promise((resolve, reject) => {
-    const mockLocation = locations[searchTerm as keyof typeof locations];
-    if (!mockLocation) {
-      reject("not found");
-    } else {
-      resolve(mockLocation);
+
+  const fetchData = async () => {
+    try {
+      const locationRes = await fetch(`${host}/geocode?city=${searchTerm}`);
+      return locationRes.json();
+    } catch (err) {
+      console.error("errore retrievig city from firebase functions");
     }
-  });
+  };
+  return fetchData();
 };
 
 export const locationTransform = ({ results }: resultType) => {
