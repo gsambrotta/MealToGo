@@ -1,5 +1,5 @@
 import camelize from "camelize-ts";
-import { host } from "../../utils/env";
+import { hostLocation } from "../../utils/env";
 
 export const restaurantsRequest = (location: string) => {
   if (!location) return;
@@ -7,12 +7,12 @@ export const restaurantsRequest = (location: string) => {
   const fetchData = async () => {
     try {
       const locationRes = await fetch(
-        `${host}/placesRequest?location=${location}`
+        `${hostLocation}/placesRequest?location=${location}&mock=${process.env.isMock}`
       );
 
       return locationRes.json();
     } catch (err) {
-      console.error("errore retrievig location from firebase functions");
+      console.error("error retrievig location from firebase functions");
     }
   };
   return fetchData();

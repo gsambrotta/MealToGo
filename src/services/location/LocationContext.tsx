@@ -60,11 +60,13 @@ export const LocationContextProvider: FC<ChildrenType> = (props) => {
           setLocation(locationTransform(res));
           setError(false);
           setIsLoading(false);
+          return;
         }
       } catch (err) {
-        console.error("fetch mocks err", err);
+        console.error("fetch location err", err);
         setError(err);
         setIsLoading(false);
+        return;
       }
     };
 

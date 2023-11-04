@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 
-import { RestaurantType, RestaurantPropType } from "../../../utils/types";
+import { RestaurantPropType } from "../../../utils/types";
 import CompactRestaurantCard from "../../restaurants/components/CompactRestaurantCard";
 
 const MarkerCustomCallout = ({ restaurant }: RestaurantPropType) => {

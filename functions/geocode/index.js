@@ -1,13 +1,27 @@
-const { locations } = require("./geocodeMock")
-const url = require("url")
+const { locations: locationsMock } = require("./geocodeMock");
+const url = require("url");
 
-module.exports.geocodeRequest = (req, res) => {
-    const { city } = url.parse(req.url, true).query
-    if(city) {
-        const mockLocation = locations[city.toLocaleLowerCase()];
+module.exports.geocodeRequest = (req, res, client) => {
+  const { city, mock } = url.parse(req.url, true).query;
 
-        res.json(mockLocation)
-    } else {
-        res.json("A city query is missing")
-    }
-}
+  if (mock === "true") {
+    const locationMock = locationsMock[city.toLowerCase()];
+    res.send(JSON.stringify(locationMock));
+  }
+
+  client
+    .geocode({
+      params: {
+        address: city,
+        key: "AIzaSyBr1Ra3uDRpAnOJZWOZDVrAYbkNZMmfdjM",
+      },
+      timeout: 1000,
+    })
+    .then((response) => {
+      return res.json(response.data);
+    })
+    .catch((err) => {
+      res.status(400);
+      return res.send(err);
+    });
+};

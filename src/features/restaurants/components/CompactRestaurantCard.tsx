@@ -41,9 +41,9 @@ const CompactRestaurantCard = ({
     <Item>
       <FavouriteIcon restaurant={restaurant} />
       {isAndroid && isMap ? (
-        <CompactWebview source={{ uri: restaurant.photo[0] }} />
+        <CompactWebview source={{ uri: restaurant.photos[0] }} />
       ) : (
-        <CompactImage source={{ uri: restaurant.photo[0] }} />
+        <CompactImage source={{ uri: restaurant.photos[0] }} />
       )}
 
       <TextComp variant="caption" numberOfLines={3}>

@@ -9,11 +9,8 @@ export const camalize = (str: string) => {
 };
 
 export const camelizeObjKeys = (obj: any) => {
-  const newObj = {};
   for (const key in obj) {
     // obj[key as keyof typeof obj] = camalize(key);
     camalize(key);
   }
-
-  console.log(obj);
 };

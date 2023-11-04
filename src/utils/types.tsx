@@ -29,7 +29,7 @@ export type RestaurantType = {
   placeId: string;
   name: string;
   icon: string;
-  photo: string[];
+  photos: string[];
   address: string;
   isOpenNow: boolean;
   rating: number;

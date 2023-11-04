@@ -1,6 +1,6 @@
 import camelize from "camelize-ts";
 import { geometryType } from "../../utils/types";
-import { host } from "../../utils/env";
+import { hostGeocode } from "../../utils/env";
 
 type resultType = {
   results: geometryType[];
@@ -28,20 +28,24 @@ export const locationRequest = (searchTerm: string) => {
 
   const fetchData = async () => {
     try {
-      const locationRes = await fetch(`${host}/geocode?city=${searchTerm}`);
+      const locationRes = await fetch(
+        `${hostGeocode}?city=${searchTerm}&mock=${process.env.isMock}`
+      );
       return locationRes.json();
     } catch (err) {
-      console.error("errore retrievig city from firebase functions");
+      console.error("error retriving city from firebase function");
     }
   };
   return fetchData();
 };
 
 export const locationTransform = ({ results }: resultType) => {
-  const camelizeResult = camelize(results);
-  const { geometry = geoInit }: geometryType =
-    camelizeResult[0 as keyof typeof camelize];
-  const { lat, lng } = geometry.location;
+  if (results) {
+    const camelizeResult = camelize(results);
+    const { geometry = geoInit }: geometryType =
+      camelizeResult[0 as keyof typeof camelize];
+    const { lat, lng } = geometry.location;
 
-  return { lat, lng, viewport: geometry.viewport };
+    return { lat, lng, viewport: geometry.viewport };
+  }
 };

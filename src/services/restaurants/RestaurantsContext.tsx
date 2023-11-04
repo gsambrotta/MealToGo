@@ -45,7 +45,7 @@ export const RestaurantsContextProvider: FC<ChildrenType> = (props) => {
           setIsLoading(false);
         }
       } catch (err) {
-        console.log("fetch mocks err", err);
+        console.error("fetch restuarant err", err);
         setError(err);
         setIsLoading(false);
       }

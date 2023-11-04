@@ -20,7 +20,7 @@ const RestaurantCard = ({ restaurant }: RestaurantPropType) => {
   const {
     name,
     icon,
-    photo,
+    photos,
     address,
     isOpenNow,
     rating,
@@ -28,11 +28,10 @@ const RestaurantCard = ({ restaurant }: RestaurantPropType) => {
   }: RestaurantType = restaurant;
 
   const ratingArray = rating && Array.from(new Array(Math.floor(rating)));
-
   return (
     <CardContainer mode="elevated" elevation={5}>
       <FavouriteIcon restaurant={restaurant} />
-      <Card.Cover source={{ uri: photo[0] }} />
+      <Card.Cover source={{ uri: photos[0] }} />
       <CardContent>
         <TextComp variant="label">{name}</TextComp>
         <InfoRow>

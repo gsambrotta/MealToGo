@@ -4,6 +4,8 @@ import { Text, ActivityIndicator } from "react-native-paper";
 import type { StackScreenProps } from "@react-navigation/stack";
 
 import { SafeArea } from "../../../components/SafeArea";
+import { Spacer } from "../../../components/Spacer";
+import { TextComp } from "../../../components/Typography/Text";
 import { RestaurantsContext } from "../../../services/restaurants/RestaurantsContext";
 import { LocationContext } from "../../../services/location/LocationContext";
 import { FavouritesContext } from "../../../services/favourites/FavouritesContext";
@@ -73,9 +75,11 @@ const RestaurantsScreen = ({ navigation }: RestaurantsScreenProps) => {
         {!isLoading && !isLoadingLocation && (
           <>
             {errorLocation || error ? (
-              <View>
-                <Text> {`An error occurred: ${error}`}</Text>
-              </View>
+              <Spacer size="large">
+                <TextComp variant="error">
+                  {`An error occurred: ${!error ? errorLocation : error}`}
+                </TextComp>
+              </Spacer>
             ) : (
               <>
                 {isToggle && (
