@@ -9,7 +9,6 @@ export const restaurantsRequest = (location: string) => {
       const locationRes = await fetch(
         `${hostLocation}/placesRequest?location=${location}&mock=${process.env.isMock}`
       );
-
       return locationRes.json();
     } catch (err) {
       console.error("error retrievig location from firebase functions");

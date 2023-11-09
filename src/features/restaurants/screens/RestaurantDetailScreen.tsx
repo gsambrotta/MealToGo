@@ -1,32 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ScrollView } from "react-native-gesture-handler";
-import type { StackScreenProps } from "@react-navigation/stack";
-import { List } from "react-native-paper";
+import { Button, List } from "react-native-paper";
+import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 
 import RestaurantCard from "../components/RestuarantCard/RestaurantCard";
 import { SafeArea } from "../../../components/SafeArea";
+import { Spacer } from "../../../components/Spacer";
+import { colors } from "../../../infrastructure/theme/colors";
+import {
+  CartContext,
+  AddToCartFunction,
+} from "../../../services/cart/CartContext";
 
-import { AppNavigationProp } from "../../../utils/types";
+const OrderButton = styled(Button).attrs({
+  color: colors.brand.primary,
+})`
+  padding: ${(props) => props.theme.space[2]};
+  width: 80%;
+  align-self: center;
+`;
 
-type RestaurantDetailScreenNavigationProps = StackScreenProps<
-  AppNavigationProp,
-  "RestaurantDetailScreen"
->;
-
-type RestaurantDetailScreenProps = {
-  navigation: RestaurantDetailScreenNavigationProps;
-  route: any;
-};
-
-const RestaurantDetailScreen = ({
-  navigation,
-  route,
-}: RestaurantDetailScreenProps) => {
+const RestaurantDetailScreen = (props: any) => {
+  const { route } = props;
+  const navigation = useNavigation();
   const { restaurant } = route.params;
-
   const [expanded, setExpanded] = useState(true);
-
   const handlePress = () => setExpanded(!expanded);
+  const { addToCart }: { addToCart: AddToCartFunction } =
+    useContext(CartContext);
 
   return (
     <SafeArea>
@@ -63,6 +65,19 @@ const RestaurantDetailScreen = ({
           </List.Accordion>
         </List.AccordionGroup>
       </ScrollView>
+
+      <Spacer size="large">
+        <OrderButton
+          mode="contained"
+          onPress={() => {
+            addToCart({ item: "special", price: "1299" }, restaurant);
+            // @ts-ignore
+            navigation.navigate("Checkout");
+          }}
+        >
+          Order special only 12.99$
+        </OrderButton>
+      </Spacer>
     </SafeArea>
   );
 };

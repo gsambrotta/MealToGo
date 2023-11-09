@@ -31,6 +31,7 @@ export const locationRequest = (searchTerm: string) => {
       const locationRes = await fetch(
         `${hostGeocode}?city=${searchTerm}&mock=${process.env.isMock}`
       );
+
       return locationRes.json();
     } catch (err) {
       console.error("error retriving city from firebase function");

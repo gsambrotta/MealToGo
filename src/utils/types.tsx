@@ -9,6 +9,9 @@ export type AppNavigationProp = {
   RestaurantsScreen: undefined;
   RestaurantDetailScreen: { restaurant: RestaurantType };
   Map: undefined;
+  MapScreen: undefined;
+  CheckoutScreen: undefined;
+  Checkout: undefined;
   Settings: undefined;
   FavouriteScreen: undefined;
 };
