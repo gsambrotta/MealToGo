@@ -13,6 +13,19 @@ import {
   AddToCartFunction,
 } from "../../../services/cart/CartContext";
 
+import { AppNavigationProp } from "../../../utils/types";
+import { StackScreenProps } from "@react-navigation/stack";
+
+type RestaurantDetailScreenNavigationProps = StackScreenProps<
+  AppNavigationProp,
+  "RestaurantDetailScreen"
+>;
+
+type RestaurantDetailScreenProps = {
+  navigation: RestaurantDetailScreenNavigationProps;
+  route: any;
+};
+
 const OrderButton = styled(Button).attrs({
   color: colors.brand.primary,
 })`
@@ -21,11 +34,13 @@ const OrderButton = styled(Button).attrs({
   align-self: center;
 `;
 
-const RestaurantDetailScreen = (props: any) => {
-  const { route } = props;
-  const navigation = useNavigation();
+const RestaurantDetailScreen = ({
+  navigation,
+  route,
+}: RestaurantDetailScreenProps) => {
   const { restaurant } = route.params;
   const [expanded, setExpanded] = useState(true);
+
   const handlePress = () => setExpanded(!expanded);
   const { addToCart }: { addToCart: AddToCartFunction } =
     useContext(CartContext);
@@ -72,7 +87,9 @@ const RestaurantDetailScreen = (props: any) => {
           onPress={() => {
             addToCart({ item: "special", price: "1299" }, restaurant);
             // @ts-ignore
-            navigation.navigate("Checkout");
+            navigation.navigate("Checkout", {
+              restaurant,
+            });
           }}
         >
           Order special only 12.99$

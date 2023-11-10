@@ -6,7 +6,6 @@ import React, {
   createContext,
 } from "react";
 import { AuthenticationContext } from "../authentication/AuthenticationContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ChildrenType, RestaurantType } from "../../utils/types";
 
 type ItemType = { item: string; price: string };
@@ -20,6 +19,7 @@ type contextValueType = {
   clearCart: () => void;
   addToCart: (item: ItemType, restaurant: RestaurantType) => void;
   cart: ItemType[];
+  sum: number;
 };
 
 const initContextValue = {
@@ -27,12 +27,14 @@ const initContextValue = {
   clearCart: () => {},
   addToCart: () => {},
   cart: [],
+  sum: 0,
 };
 
 export const CartContext = createContext<contextValueType>(initContextValue);
 export const CartContextProvider: FC<ChildrenType> = ({ children }) => {
   const { user } = useContext(AuthenticationContext);
   const [cart, setCart] = useState<ItemType[]>([]);
+  const [sum, setSum] = useState<number>(0);
   const [restaurant, setRestaurant] = useState<RestaurantType | null>(null);
 
   const add = (item: ItemType, rest: any) => {
@@ -49,6 +51,17 @@ export const CartContextProvider: FC<ChildrenType> = ({ children }) => {
     setRestaurant(null);
   };
 
+  useEffect(() => {
+    if (!cart.length) {
+      return setSum(0);
+    }
+
+    const newSum = cart.reduce((acc, { price }) => {
+      return (acc += Number(price));
+    }, 0);
+    setSum(newSum);
+  }, [cart]);
+
   return (
     <CartContext.Provider
       value={{
@@ -56,6 +69,7 @@ export const CartContextProvider: FC<ChildrenType> = ({ children }) => {
         clearCart: clear,
         restaurant,
         cart,
+        sum,
       }}
     >
       {children}
