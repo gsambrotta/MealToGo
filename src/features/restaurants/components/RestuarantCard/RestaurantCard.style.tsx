@@ -6,6 +6,7 @@ export const CardContainer = styled(Card)`
   padding: ${(props) => props.theme.space[3]};
   margin-bottom: ${(props) => props.theme.space[2]};
 `;
+
 export const CardContent = styled(Card.Content)`
   padding: ${(props) => props.theme.space[0]};
   margin-top: ${(props) => props.theme.space[2]};

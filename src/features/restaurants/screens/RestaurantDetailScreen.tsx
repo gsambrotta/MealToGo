@@ -16,7 +16,7 @@ import {
 import { AppNavigationProp } from "../../../utils/types";
 import { StackScreenProps } from "@react-navigation/stack";
 
-type RestaurantDetailScreenNavigationProps = StackScreenProps<
+export type RestaurantDetailScreenNavigationProps = StackScreenProps<
   AppNavigationProp,
   "RestaurantDetailScreen"
 >;
