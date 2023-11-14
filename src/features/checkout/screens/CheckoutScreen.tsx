@@ -2,11 +2,15 @@ import React, { useState, useContext } from "react";
 import { View } from "react-native";
 import type { StackScreenProps } from "@react-navigation/stack";
 import { List, Text } from "react-native-paper";
+import { ScrollView } from "react-native-gesture-handler";
 
 import { CartContext } from "../../../services/cart/CartContext";
 import { AppNavigationProp } from "../../../utils/types";
 import { SafeArea } from "../../../components/SafeArea";
 import { CreditCardInput } from "../components/CreditCard";
+import { Spacer } from "../../../components/Spacer";
+import RestaurantCard from "../../restaurants/components/RestuarantCard/RestaurantCard";
+import { payRequest } from "../../../services/checkout/CheckoutService";
 
 type CheckoutScreenProps = StackScreenProps<AppNavigationProp, "Checkout">;
 
@@ -14,14 +18,41 @@ import {
   CartIconContainer,
   CartIcon,
   NameInput,
+  ClearButton,
+  PayButton,
+  PaymentProcessing,
 } from "../components/Checkout.style";
-import { ScrollView } from "react-native-gesture-handler";
-import { Spacer } from "../../../components/Spacer";
-import RestaurantCard from "../../restaurants/components/RestuarantCard/RestaurantCard";
 
 const CheckoutScreen = ({ navigation }: CheckoutScreenProps) => {
-  const { cart, restaurant, sum } = useContext(CartContext);
+  const { cart, restaurant, sum, clearCart } = useContext(CartContext);
   const [name, setName] = useState<string>("");
+  const [card, setCard] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const onPay = async () => {
+    setIsLoading(true);
+    if (!card || !card.id) {
+      setIsLoading(false);
+      return;
+    }
+    try {
+      const res = await payRequest(card.id, sum, name);
+      console.log({ res });
+      if (res.ok === "false") {
+        console.log("error 400");
+        setIsLoading(false);
+        return;
+      } else {
+        console.log("no err");
+        setIsLoading(false);
+        return;
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log("error in payRequst fetch", error);
+      return;
+    }
+  };
 
   if (!cart.length || !restaurant) {
     return (
@@ -38,6 +69,7 @@ const CheckoutScreen = ({ navigation }: CheckoutScreenProps) => {
     <SafeArea>
       <View>
         <RestaurantCard restaurant={restaurant} />
+        {isLoading && <PaymentProcessing />}
       </View>
       <ScrollView>
         <Spacer size="medium">
@@ -59,14 +91,32 @@ const CheckoutScreen = ({ navigation }: CheckoutScreenProps) => {
         <NameInput
           label="Name"
           onChangeText={(input) => {
-            if (Text.length) {
+            if (input.length) {
               setName(input);
             } else {
               setName("");
             }
           }}
         />
-        {name.length > 0 && <CreditCardInput name={name} />}
+        {name.length > 0 && <CreditCardInput name={name} onSuccess={setCard} />}
+        <PayButton
+          disabled={isLoading}
+          icon="cash"
+          mode="contained"
+          onPress={onPay}
+        >
+          Pay
+        </PayButton>
+        <Spacer size="large">
+          <ClearButton
+            disabled={isLoading}
+            icon="cart-off"
+            mode="contained"
+            onPress={clearCart}
+          >
+            Clear
+          </ClearButton>
+        </Spacer>
       </ScrollView>
     </SafeArea>
   );

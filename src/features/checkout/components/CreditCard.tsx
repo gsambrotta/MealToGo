@@ -20,7 +20,12 @@ interface CreditCardFormData {
   };
 }
 
-export const CreditCardInput = ({ name = "Gio" }) => {
+export type CreditCardInputProp = {
+  name: string;
+  onSuccess: (info: any) => void;
+};
+
+export const CreditCardInput = ({ name, onSuccess }: CreditCardInputProp) => {
   const handleOnChange = async (formData: CreditCardFormData) => {
     const { values, status } = formData;
     const isIncomplete = Object.values(status).includes("incomplete");
@@ -37,7 +42,7 @@ export const CreditCardInput = ({ name = "Gio" }) => {
     if (!isIncomplete) {
       try {
         const info = await cardTokenRequest(card);
-        console.log({ info });
+        onSuccess(info);
       } catch (err) {
         console.error("Error in credit card", err);
       }

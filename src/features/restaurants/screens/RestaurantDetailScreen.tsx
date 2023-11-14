@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { Button, List } from "react-native-paper";
 import styled from "styled-components/native";
-import { useNavigation } from "@react-navigation/native";
 
 import RestaurantCard from "../components/RestuarantCard/RestaurantCard";
 import { SafeArea } from "../../../components/SafeArea";

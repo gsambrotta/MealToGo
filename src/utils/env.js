@@ -2,6 +2,7 @@ import { Platform } from "react-native";
 
 const firebaseGeocodeProd = "https://geocode-axojyswcaq-uc.a.run.app";
 const firebaseLocationProd = "https://placesrequest-axojyswcaq-uc.a.run.app";
+const firebasePayProd = "https://payrequest-axojyswcaq-uc.a.run.app";
 const firebaseFuncDev = "http://0.0.0.0:5001/mealstogo-3b93d/us-central1";
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -13,3 +14,5 @@ export const hostGeocode =
   !isDevelopment || isAndroid ? firebaseGeocodeProd : firebaseFuncDev;
 export const hostLocation =
   !isDevelopment || isAndroid ? firebaseLocationProd : firebaseFuncDev;
+export const hostPay =
+  !isDevelopment || isAndroid ? firebasePayProd : firebaseFuncDev;
