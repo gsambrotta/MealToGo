@@ -12,7 +12,10 @@ import { Spacer } from "../../../components/Spacer";
 import RestaurantCard from "../../restaurants/components/RestuarantCard/RestaurantCard";
 import { payRequest } from "../../../services/checkout/CheckoutService";
 
-type CheckoutScreenProps = StackScreenProps<AppNavigationProp, "Checkout">;
+type CheckoutScreenProps = StackScreenProps<
+  AppNavigationProp,
+  "CheckoutScreen"
+>;
 
 import {
   CartIconContainer,
@@ -33,23 +36,34 @@ const CheckoutScreen = ({ navigation }: CheckoutScreenProps) => {
     setIsLoading(true);
     if (!card || !card.id) {
       setIsLoading(false);
+      navigation.navigate("CheckoutErrorScreen", {
+        error: "Please fill in a valid credit card",
+      });
       return;
     }
     try {
       const res = await payRequest(card.id, sum, name);
-      console.log({ res });
-      if (res.ok === "false") {
+
+      if (res.ok === false) {
         console.log("error 400");
         setIsLoading(false);
+        navigation.navigate("CheckoutErrorScreen", {
+          error: "Something went wrong processing your credit card",
+        });
         return;
       } else {
         console.log("no err");
         setIsLoading(false);
+        clearCart();
+        navigation.navigate("CheckoutSuccessScreen");
         return;
       }
     } catch (error) {
       setIsLoading(false);
       console.log("error in payRequst fetch", error);
+      navigation.navigate("CheckoutErrorScreen", {
+        error: "Something went wrong processing your credit card",
+      });
       return;
     }
   };
@@ -98,7 +112,17 @@ const CheckoutScreen = ({ navigation }: CheckoutScreenProps) => {
             }
           }}
         />
-        {name.length > 0 && <CreditCardInput name={name} onSuccess={setCard} />}
+        {name.length > 0 && (
+          <CreditCardInput
+            name={name}
+            onSuccess={setCard}
+            onError={() =>
+              navigation.navigate("CheckoutErrorScreen", {
+                error: "Something went wrong processing your credit card",
+              })
+            }
+          />
+        )}
         <PayButton
           disabled={isLoading}
           icon="cash"

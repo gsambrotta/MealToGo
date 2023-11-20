@@ -1,3 +1,5 @@
+/* Course repo: https://github.com/mobinni/MealsToGo */
+
 import "react-native-gesture-handler";
 import React from "react";
 import { initializeApp } from "firebase/app";

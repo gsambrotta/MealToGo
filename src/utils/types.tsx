@@ -11,6 +11,8 @@ export type AppNavigationProp = {
   Map: undefined;
   MapScreen: undefined;
   CheckoutScreen: undefined;
+  CheckoutErrorScreen: { error: string };
+  CheckoutSuccessScreen: undefined;
   Checkout: undefined;
   Settings: undefined;
   FavouriteScreen: undefined;
@@ -26,6 +28,12 @@ export type SettingsNavigationProp = {
   SettingsScreen: undefined;
   FavouriteScreen: undefined;
   CameraScreen: undefined;
+};
+
+export type CheckoutNavigationProp = {
+  CheckoutScreen: undefined;
+  CheckoutErrorScreen: undefined;
+  CheckoutSuccessScreen: undefined;
 };
 
 export type RestaurantType = {
